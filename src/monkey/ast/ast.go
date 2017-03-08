@@ -110,7 +110,7 @@ type ExpressionStatement struct {
 
 func (es *ExpressionStatement) statementNode() {}
 func (es *ExpressionStatement) TokenLiteral() string {
-	retunr es.Token.Literal
+	return es.Token.Literal
 }
 func (es *ExpressionStatement) String() string {
 	if es.Expression != nil {
