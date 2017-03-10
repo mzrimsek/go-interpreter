@@ -24,7 +24,7 @@ type Program struct {
 	Statements []Statement
 }
 
-func(p *Program) TokenLiteral() string {
+func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
 		return p.Statements[0].TokenLiteral()
 	} else {
@@ -57,7 +57,7 @@ func (ls *LetStatement) String() string {
 	out.WriteString(ls.TokenLiteral() + " ")
 	out.WriteString(ls.Name.String())
 	out.WriteString(" = ")
-	
+
 	if ls.Value != nil {
 		out.WriteString(ls.Value.String())
 	}
@@ -148,6 +148,29 @@ func (pe *PrefixExpression) String() string {
 	out.WriteString("(")
 	out.WriteString(pe.Operator)
 	out.WriteString(pe.Right.String())
+	out.WriteString(")")
+
+	return out.String()
+}
+
+type InfixExpression struct {
+	Token    token.Token
+	Left     Expression
+	Operator string
+	Right    Expression
+}
+
+func (ie *InfixExpression) expressionNode() {}
+func (ie *InfixExpression) TokenLiteral() string {
+	return ie.Token.Literal
+}
+func (ie *InfixExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("(")
+	out.WriteString(ie.Left.String())
+	out.WriteString(" " + ie.Operator + " ")
+	out.WriteString(ie.Right.String())
 	out.WriteString(")")
 
 	return out.String()
