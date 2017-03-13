@@ -1,8 +1,22 @@
 #!/bin/bash
+
 PWD=$(pwd)
+GO_EXT="lukehoban.Go"
 SETTINGS_DIR=".vscode"
 SETTINGS_FILE="$SETTINGS_DIR/settings.json"
 BIN_DIR="bin"
+
+install_tool() {
+	if [ ! -f $BIN_DIR/$1 ]; then
+		echo "$1 not installed...downloading..."
+		go get -u -v $2
+	else
+		echo "$1 already installed..."
+	fi
+}
+
+echo "Installing Go extension..."
+code --install-extension $GO_EXT
 
 echo "Setting up settings.json..."
 if [ ! -d $SETTINGS_DIR ]; then
@@ -17,50 +31,18 @@ if [ ! -f $SETTINGS_FILE ]; then
 	echo "	\"go.gopath\": \"$PWD\"" >> $SETTINGS_FILE
 	echo "}" >> $SETTINGS_FILE
 fi
-echo "Done"
 
-echo "Installing tools..."
-if [ ! -f $BIN_DIR/gocode ]; then
-	go get -u -v github.com/nsf/gocode
-fi
+echo "Installing tools for extension..."
+install_tool "gocode" "github.com/nsf/gocode"
+install_tool "godef" "github.com/rogpeppe/godef"
+install_tool "gogetdoc" "github.com/zmb3/gogetdoc"
+install_tool "golint" "github.com/golang/lint/golint"
+install_tool "go-outline" "github.com/lukehoban/go-outline"
+install_tool "goreturns" "sourcegraph.com/sqs/goreturns"
+install_tool "gorename" "golang.org/x/tools/cmd/gorename"
+install_tool "gopkgs" "github.com/tpng/gopkgs"
+install_tool "go-symbols" "github.com/newhook/go-symbols"
+install_tool "guru" "golang.org/x/tools/cmd/guru"
+install_tool "gotests" "github.com/cweill/gotests/..."
 
-if [ ! -f $BIN_DIR/godef ]; then
-	go get -u -v github.com/rogpeppe/godef
-fi
-
-if [ ! -f $BIN_DIR/gogetdoc ]; then
-	go get -u -v github.com/zmb3/gogetdoc
-fi
-
-if [ ! -f $BIN_DIR/golint ]; then
-	go get -u -v github.com/golang/lint/golint
-fi
-
-if [ ! -f $BIN_DIR/go-outline ]; then
-	go get -u -v github.com/lukehoban/go-outline
-fi
-
-if [ ! -f $BIN_DIR/goreturns ]; then
-	go get -u -v sourcegraph.com/sqs/goreturns
-fi
-
-if [ ! -f $BIN_DIR/gorename ]; then
-	go get -u -v golang.org/x/tools/cmd/gorename
-fi
-
-if [ ! -f $BIN_DIR/gopkgs ]; then
-	go get -u -v github.com/tpng/gopkgs
-fi
-
-if [ ! -f $BIN_DIR/go-symbols ]; then
-	go get -u -v github.com/newhook/go-symbols
-fi
-
-if [ ! -f $BIN_DIR/guru ]; then 
-	go get -u -v golang.org/x/tools/cmd/guru
-fi
-
-if [ ! -f $BIN_DIR/gotests ]; then
-	go get -u -v github.com/cweill/gotests/...
-fi
-echo "Done"
+echo "Environment setup complete"
