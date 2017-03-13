@@ -5,5 +5,6 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 The plan is to follow the book to completion then make some feature additions before writing my own interpreter from scratch.
 
 ## Planned Feature Additions
-* Floats
+* Float literals
+* Ternary statements
 * Emojis
