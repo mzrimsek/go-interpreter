@@ -190,7 +190,7 @@ func (b *Boolean) String() string {
 }
 
 type IfExpression struct {
-	token       token.Token
+	Token       token.Token
 	Condition   Expression
 	Consequence *BlockStatement
 	Alternative *BlockStatement
@@ -198,7 +198,7 @@ type IfExpression struct {
 
 func (ie *IfExpression) expressionNode() {}
 func (ie *IfExpression) TokenLiteral() string {
-	return ie.token.Literal
+	return ie.Token.Literal
 }
 func (ie *IfExpression) String() string {
 	var out bytes.Buffer
@@ -211,6 +211,25 @@ func (ie *IfExpression) String() string {
 	if ie.Alternative != nil {
 		out.WriteString("else")
 		out.WriteString(ie.Alternative.String())
+	}
+
+	return out.String()
+}
+
+type BlockStatement struct {
+	Token      token.Token
+	Statements []Statement
+}
+
+func (bs *BlockStatement) statementNode() {}
+func (bs *BlockStatement) TokenLiteral() string {
+	return bs.Token.Literal
+}
+func (bs *BlockStatement) String() string {
+	var out bytes.Buffer
+
+	for _, s := range bs.Statements {
+		out.WriteString(s.String())
 	}
 
 	return out.String()
