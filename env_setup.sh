@@ -8,17 +8,22 @@ BIN_DIR="bin"
 
 install_tool() {
 	if [ ! -f $BIN_DIR/$1 ]; then
-		echo "$1 not installed...downloading..."
+		echo "$1 not installed...installing..."
 		go get -u -v $2
 	else
 		echo "$1 already installed..."
 	fi
 }
 
-echo "Installing Go extension..."
-code --install-extension $GO_EXT
+INSTALLED_EXTS=`code --list-extensions`
+if [[ ! $INSTALLED_EXTS  =~ .*$GO_EXT*. ]]; then
+	echo "$GO_EXT not installed...installing..."
+	code --install-extension $GO_EXT
+else 
+	echo "$GO_EXT already installed..."
+fi
 
-echo "Setting up settings.json..."
+echo "Configuring settings.json..."
 if [ ! -d $SETTINGS_DIR ]; then
 	mkdir $SETTINGS_DIR
 fi
