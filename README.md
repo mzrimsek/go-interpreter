@@ -8,4 +8,5 @@ The plan is to follow the book to completion then make some feature additions be
 * Float literals
 * Ternary statements
 * Else-If statements
+* Switch statements
 * Emojis
