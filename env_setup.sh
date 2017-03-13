@@ -23,7 +23,7 @@ else
 	echo "$GO_EXT already installed..."
 fi
 
-echo "Configuring settings.json..."
+echo -e "\nConfiguring extension settings..."
 if [ ! -d $SETTINGS_DIR ]; then
 	mkdir $SETTINGS_DIR
 fi
@@ -37,17 +37,17 @@ if [ ! -f $SETTINGS_FILE ]; then
 	echo "}" >> $SETTINGS_FILE
 fi
 
-echo "Installing tools for extension..."
-install_tool "gocode" "github.com/nsf/gocode"
-install_tool "godef" "github.com/rogpeppe/godef"
-install_tool "gogetdoc" "github.com/zmb3/gogetdoc"
-install_tool "golint" "github.com/golang/lint/golint"
+echo -e "\nInstalling tools for extension..."
+install_tool "gocode"     "github.com/nsf/gocode"
+install_tool "godef"      "github.com/rogpeppe/godef"
+install_tool "gogetdoc"   "github.com/zmb3/gogetdoc"
+install_tool "golint"     "github.com/golang/lint/golint"
 install_tool "go-outline" "github.com/lukehoban/go-outline"
-install_tool "goreturns" "sourcegraph.com/sqs/goreturns"
-install_tool "gorename" "golang.org/x/tools/cmd/gorename"
-install_tool "gopkgs" "github.com/tpng/gopkgs"
+install_tool "goreturns"  "sourcegraph.com/sqs/goreturns"
+install_tool "gorename"   "golang.org/x/tools/cmd/gorename"
+install_tool "gopkgs"     "github.com/tpng/gopkgs"
 install_tool "go-symbols" "github.com/newhook/go-symbols"
-install_tool "guru" "golang.org/x/tools/cmd/guru"
-install_tool "gotests" "github.com/cweill/gotests/..."
+install_tool "guru"       "golang.org/x/tools/cmd/guru"
+install_tool "gotests"    "github.com/cweill/gotests/..."
 
-echo "Environment setup complete"
+echo -e "\nEnvironment setup complete"
