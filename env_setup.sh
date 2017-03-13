@@ -15,10 +15,12 @@ install_tool() {
 	fi
 }
 
+DID_INSTALL_EXT=0
 INSTALLED_EXTS=`code --list-extensions`
 if [[ ! $INSTALLED_EXTS  =~ .*$GO_EXT*. ]]; then
 	echo "$GO_EXT not installed...installing..."
 	code --install-extension $GO_EXT
+	DID_INSTALL_EXT=1
 else 
 	echo "$GO_EXT already installed..."
 fi
@@ -51,3 +53,6 @@ install_tool "guru"       "golang.org/x/tools/cmd/guru"
 install_tool "gotests"    "github.com/cweill/gotests/..."
 
 echo -e "\nEnvironment setup complete"
+if [ "$DID_INSTALL_EXT" = 1 ]; then
+	echo "Restart Visual Studio Code to activate $GO_EXT"
+fi
