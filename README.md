@@ -6,7 +6,12 @@ The plan is to follow the book to completion then make some feature additions be
 
 ## Planned Feature Additions
 * Float literals
+* Character literals
 * Ternary statements
 * Else-If statements
 * Switch statements
+* While loops
+* For loops
+* Do-While loops
+* Dynamic list structure
 * Emojis
