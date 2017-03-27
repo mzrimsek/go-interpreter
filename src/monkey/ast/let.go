@@ -5,6 +5,7 @@ import (
 	"monkey/token"
 )
 
+// LetStatement : Statement node representing variable declaration and assignment
 type LetStatement struct {
 	Token token.Token
 	Name  *Identifier
@@ -13,6 +14,7 @@ type LetStatement struct {
 
 func (ls *LetStatement) statementNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (ls *LetStatement) TokenLiteral() string {
 	return ls.Token.Literal
 }
