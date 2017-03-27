@@ -8,6 +8,7 @@ The plan is to follow the book to completion then make some feature additions be
 * Float literals
 * Character literals
 * Ternary statements
+* Less Than or Equal and Greater Than or Equal operators
 * Else-If statements
 * Switch statements
 * While loops
