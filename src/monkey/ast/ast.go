@@ -1,4 +1,4 @@
-// Package ast : Statement and Expression nodes definitions used by the Parser to build an Abstract Syntax Tree for an inputted program
+// Package ast : Statement and Expression node definitions used to build an Abstract Syntax Tree for Monkey programs
 package ast
 
 // Node : Generic AST node
