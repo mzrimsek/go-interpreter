@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// CallExpression : Expression node representing calling a function and passing it arguments
 type CallExpression struct {
 	Token     token.Token
 	Function  Expression
@@ -14,6 +15,7 @@ type CallExpression struct {
 
 func (ce *CallExpression) expressionNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (ce *CallExpression) TokenLiteral() string {
 	return ce.Token.Literal
 }
