@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// FunctionLiteral : Expression node representing a function literal including its parameters and body statements
 type FunctionLiteral struct {
 	Token      token.Token
 	Parameters []*Identifier
@@ -14,6 +15,7 @@ type FunctionLiteral struct {
 
 func (fl *FunctionLiteral) expressionNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (fl *FunctionLiteral) TokenLiteral() string {
 	return fl.Token.Literal
 }
