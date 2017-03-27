@@ -237,7 +237,7 @@ func (bs *BlockStatement) String() string {
 }
 
 type FunctionLiteral struct {
-	Token      token.Literal
+	Token      token.Token
 	Parameters []*Identifier
 	Body       *BlockStatement
 }
@@ -249,7 +249,7 @@ func (fl *FunctionLiteral) TokenLiteral() string {
 func (fl *FunctionLiteral) String() string {
 	var out bytes.Buffer
 
-	params := []string()
+	params := []string{}
 	for _, p := range fl.Parameters {
 		params = append(params, p.String())
 	}
