@@ -4,65 +4,46 @@ package token
 // TokenType : String representation of each type of Token
 type TokenType string
 
+// TokenTypes
 const (
-	// ILLEGAL : Illegal TokenType
 	ILLEGAL = "ILLEGAL"
-	// EOF : End of file TokenType
-	EOF = "EOF"
+	EOF     = "EOF"
 
-	// IDENT : Identifier literal TokenType
+	// Literals
 	IDENT = "IDENT"
-	// INT : Integer literal TokenType
-	INT = "INT"
+	INT   = "INT"
 
-	// ASSIGN : Assignment operator TokenType
-	ASSIGN = "="
-	// PLUS : Addition operator TokenType
-	PLUS = "+"
-	// MINUS : Subtraction and negative number operator TokenType
-	MINUS = "-"
-	// BANG : Negation operator TokenType
-	BANG = "!"
-	// ASTERISK : Multiplication operator TokenType
+	// Operators
+	ASSIGN   = "="
+	PLUS     = "+"
+	MINUS    = "-"
+	BANG     = "!"
 	ASTERISK = "*"
-	// SLASH : Division operator TokenType
-	SLASH = "/"
-	// LT : Less than operator TokenType
+	SLASH    = "/"
+
 	LT = "<"
-	// GT : Greater than operator TokenType
 	GT = ">"
-	// EQ : Equality operator TokenType
-	EQ = "=="
-	// NOT_EQ : Negated equality operator TokenType
+
+	EQ     = "=="
 	NOT_EQ = "!="
 
-	// COMMA : Comma delimiter TokenType
-	COMMA = ","
-	// SEMICOLON : Semicolon delimiter TokenType
+	// Delimiters
+	COMMA     = ","
 	SEMICOLON = ";"
-	// LPAREN : Left parenthesis delimiter TokenType
+
 	LPAREN = "("
-	// RPAREN : Right parenthesis delimiter TokenType
 	RPAREN = ")"
-	// LBRACE : Left brace delimiter TokenType
 	LBRACE = "{"
-	// RBRACE : Right brace delimiter TokenType
 	RBRACE = "}"
 
-	// FUNCTION : Function expression keyword TokenType
+	// Keywords
 	FUNCTION = "FUNCTION"
-	// LET : Let statement keyword TokenType
-	LET = "LET"
-	// TRUE : True boolean value keyword TokenType
-	TRUE = "TRUE"
-	// FALSE : False boolean value keyword TokenType
-	FALSE = "FALSE"
-	// IF : If expression keyword TokenType
-	IF = "IF"
-	// ELSE : Else expression keyword TokenType
-	ELSE = "ELSE"
-	// RETURN : Return statement keyword TokenType
-	RETURN = "RETURN"
+	LET      = "LET"
+	TRUE     = "TRUE"
+	FALSE    = "FALSE"
+	IF       = "IF"
+	ELSE     = "ELSE"
+	RETURN   = "RETURN"
 )
 
 // Token : Defines the type and literal representation for the tokens to be used in program analysis
