@@ -1,3 +1,4 @@
+// Package parser : Converts tokenized program input into an AST that can be evaluated
 package parser
 
 import (
@@ -37,6 +38,7 @@ type (
 	infixParseFn  func(ast.Expression) ast.Expression
 )
 
+// Parser : Handles applying parsing functions to each inputed token
 type Parser struct {
 	l      *lexer.Lexer
 	errors []string
@@ -48,6 +50,7 @@ type Parser struct {
 	infixParseFns  map[token.TokenType]infixParseFn
 }
 
+// New : Initializes a new Parser with a Lexer to tokenize program input
 func New(l *lexer.Lexer) *Parser {
 	p := &Parser{
 		l:      l,
@@ -82,8 +85,25 @@ func New(l *lexer.Lexer) *Parser {
 	return p
 }
 
+// Errors : Returns all errors encountered while parsing tokens
 func (p *Parser) Errors() []string {
 	return p.errors
+}
+
+// ParseProgram : Iterates through tokens to build Program with parsed statements
+func (p *Parser) ParseProgram() *ast.Program {
+	program := &ast.Program{}
+	program.Statements = []ast.Statement{}
+
+	for p.curToken.Type != token.EOF {
+		stmt := p.parseStatement()
+		if stmt != nil {
+			program.Statements = append(program.Statements, stmt)
+		}
+		p.nextToken()
+	}
+
+	return program
 }
 
 func (p *Parser) peekError(t token.TokenType) {
@@ -108,10 +128,9 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 	if p.peekTokenIs(t) {
 		p.nextToken()
 		return true
-	} else {
-		p.peekError(t)
-		return false
 	}
+	p.peekError(t)
+	return false
 }
 
 func (p *Parser) peekPrecedence() int {
@@ -139,21 +158,6 @@ func (p *Parser) registerInfix(tokenType token.TokenType, fn infixParseFn) {
 func (p *Parser) noPrefixParseFnError(t token.TokenType) {
 	msg := fmt.Sprintf("no prefix parse function for for %s found", t)
 	p.errors = append(p.errors, msg)
-}
-
-func (p *Parser) ParseProgram() *ast.Program {
-	program := &ast.Program{}
-	program.Statements = []ast.Statement{}
-
-	for p.curToken.Type != token.EOF {
-		stmt := p.parseStatement()
-		if stmt != nil {
-			program.Statements = append(program.Statements, stmt)
-		}
-		p.nextToken()
-	}
-
-	return program
 }
 
 func (p *Parser) parseStatement() ast.Statement {
