@@ -5,6 +5,7 @@ import (
 	"monkey/token"
 )
 
+// InfixExpression : Expression node representing infix expressions such as arithmetic and comparisons
 type InfixExpression struct {
 	Token    token.Token
 	Left     Expression
@@ -14,6 +15,7 @@ type InfixExpression struct {
 
 func (ie *InfixExpression) expressionNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (ie *InfixExpression) TokenLiteral() string {
 	return ie.Token.Literal
 }
