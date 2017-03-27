@@ -2,6 +2,7 @@ package ast
 
 import "monkey/token"
 
+// ExpressionStatement : Statement node representing a high-level expression
 type ExpressionStatement struct {
 	Token      token.Token
 	Expression Expression
@@ -9,6 +10,7 @@ type ExpressionStatement struct {
 
 func (es *ExpressionStatement) statementNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (es *ExpressionStatement) TokenLiteral() string {
 	return es.Token.Literal
 }
