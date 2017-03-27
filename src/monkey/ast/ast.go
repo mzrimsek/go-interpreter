@@ -1,3 +1,4 @@
+// Package ast : Statement and Expression nodes definitions used by the Parser to build an Abstract Syntax Tree for an inputted program
 package ast
 
 // Node : Generic AST node
