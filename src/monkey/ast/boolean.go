@@ -2,6 +2,7 @@ package ast
 
 import "monkey/token"
 
+// Boolean : Expression node representing a boolean literal
 type Boolean struct {
 	Token token.Token
 	Value bool
@@ -9,6 +10,7 @@ type Boolean struct {
 
 func (b *Boolean) expressionNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (b *Boolean) TokenLiteral() string {
 	return b.Token.Literal
 }
