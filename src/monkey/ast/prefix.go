@@ -5,6 +5,7 @@ import (
 	"monkey/token"
 )
 
+// PrefixExpression : Expression node representing prefix expressions like negative numbers and negation
 type PrefixExpression struct {
 	Token    token.Token
 	Operator string
@@ -13,6 +14,7 @@ type PrefixExpression struct {
 
 func (pe *PrefixExpression) expressionNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (pe *PrefixExpression) TokenLiteral() string {
 	return pe.Token.Literal
 }
