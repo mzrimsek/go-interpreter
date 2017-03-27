@@ -5,6 +5,7 @@ import (
 	"monkey/token"
 )
 
+// ReturnStatement :  Statement node representing returning a value
 type ReturnStatement struct {
 	Token       token.Token
 	ReturnValue Expression
@@ -12,6 +13,7 @@ type ReturnStatement struct {
 
 func (rs *ReturnStatement) statementNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (rs *ReturnStatement) TokenLiteral() string {
 	return rs.Token.Literal
 }
