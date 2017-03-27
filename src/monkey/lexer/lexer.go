@@ -1,7 +1,9 @@
+// Package lexer : Applies lexical analysis to program input to tokenize so it can be parsed
 package lexer
 
 import "monkey/token"
 
+// Lexer : Handles analyzing and tokenizing program input character by character
 type Lexer struct {
 	input        string
 	position     int
@@ -9,12 +11,14 @@ type Lexer struct {
 	ch           byte
 }
 
+// New : Initializes a new Lexer with input to analyze
 func New(input string) *Lexer {
 	l := &Lexer{input: input}
 	l.readChar()
 	return l
 }
 
+// NextToken : Processes current character (and necessary peeked characters) to convert it into the correct token
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
@@ -95,15 +99,14 @@ func (l *Lexer) readChar() {
 		l.ch = l.input[l.readPosition]
 	}
 	l.position = l.readPosition
-	l.readPosition += 1
+	l.readPosition++
 }
 
 func (l *Lexer) peekChar() byte {
 	if l.readPosition >= len(l.input) {
 		return 0
-	} else {
-		return l.input[l.readPosition]
 	}
+	return l.input[l.readPosition]
 }
 
 func (l *Lexer) readIdentifier() string {
