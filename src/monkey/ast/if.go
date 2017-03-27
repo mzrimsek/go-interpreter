@@ -5,6 +5,7 @@ import (
 	"monkey/token"
 )
 
+// IfExpression : Expression node representing an if/else block
 type IfExpression struct {
 	Token       token.Token
 	Condition   Expression
@@ -14,6 +15,7 @@ type IfExpression struct {
 
 func (ie *IfExpression) expressionNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (ie *IfExpression) TokenLiteral() string {
 	return ie.Token.Literal
 }
