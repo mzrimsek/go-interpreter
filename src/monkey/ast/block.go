@@ -5,6 +5,7 @@ import (
 	"monkey/token"
 )
 
+// BlockStatement : Statement node representing a block of statements
 type BlockStatement struct {
 	Token      token.Token
 	Statements []Statement
@@ -12,6 +13,7 @@ type BlockStatement struct {
 
 func (bs *BlockStatement) statementNode() {}
 
+// TokenLiteral : Returns the literal representation of the token
 func (bs *BlockStatement) TokenLiteral() string {
 	return bs.Token.Literal
 }
