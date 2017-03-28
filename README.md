@@ -1,5 +1,4 @@
 # go-interpreter
-
 An interpreter written in Go as described in [Writing An Interpreter In Go](https://interpreterbook.com/). The book is great and I highly recommend it.
 
 The plan is to follow the book to completion then make some feature additions before writing my own interpreter from scratch.
@@ -17,3 +16,6 @@ The plan is to follow the book to completion then make some feature additions be
 * Do-While loops
 * Dynamic list structure
 * Emojis
+
+## Setup
+The setup script I've written works best with Visual Studio Code.
