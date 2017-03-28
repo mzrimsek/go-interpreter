@@ -7,6 +7,7 @@ import (
 	"monkey/evaluator"
 	"monkey/lexer"
 	"monkey/parser"
+	"os"
 )
 
 const PROMPT = ">> "
@@ -34,6 +35,10 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
+		if line == "exit" {
+			os.Exit(0)
+		}
+
 		l := lexer.New(line)
 		p := parser.New(l)
 
