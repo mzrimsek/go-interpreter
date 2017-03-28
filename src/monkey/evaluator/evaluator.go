@@ -1,14 +1,17 @@
+// Package evaluator : Prcesses an AST node by node to execute the program
 package evaluator
 
 import "monkey/ast"
 import "monkey/object"
 
+// Single reference Objects
 var (
 	NULL  = &object.Null{}
 	TRUE  = &object.Boolean{Value: true}
 	FALSE = &object.Boolean{Value: false}
 )
 
+// Eval : Takes a Node and evaluates it into its corresponding Object
 func Eval(node ast.Node) object.Object {
 	switch node := node.(type) {
 	// Statements
