@@ -1,4 +1,4 @@
-// Package token : Token definitions used to tokenize program input
+// Package token : Token definitions used when tokenizing program input
 package token
 
 // TokenType : String representation of each type of Token
