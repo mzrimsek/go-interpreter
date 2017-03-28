@@ -5,6 +5,7 @@ GO_EXT="lukehoban.Go"
 SETTINGS_DIR=".vscode"
 SETTINGS_FILE="$SETTINGS_DIR/settings.json"
 BIN_DIR="bin"
+DID_INSTALL_EXT=0
 
 install_tool() {
 	if [ ! -f $BIN_DIR/$1 ]; then
@@ -15,7 +16,6 @@ install_tool() {
 	fi
 }
 
-DID_INSTALL_EXT=0
 INSTALLED_EXTS=`code --list-extensions`
 if [[ ! $INSTALLED_EXTS  =~ .*$GO_EXT*. ]]; then
 	echo "$GO_EXT not installed...installing..."
@@ -30,14 +30,16 @@ if [ ! -d $SETTINGS_DIR ]; then
 	mkdir $SETTINGS_DIR
 fi
 
-if [ ! -f $SETTINGS_FILE ]; then
-	echo "{" >> $SETTINGS_FILE
-	echo "	\"go.formatTool\": \"goreturns\"," >> $SETTINGS_FILE
-	echo "	\"go.docsTool\": \"gogetdoc\"," >> $SETTINGS_FILE
-	echo "	\"go.lintOnSave\": true," >> $SETTINGS_FILE
-	echo "	\"go.gopath\": \"$PWD\"" >> $SETTINGS_FILE
-	echo "}" >> $SETTINGS_FILE
+if [ -f $SETTINGS_FILE ]; then
+	rm $SETTINGS_FILE
 fi
+
+echo "{" >> $SETTINGS_FILE
+echo "	\"go.formatTool\": \"goreturns\"," >> $SETTINGS_FILE
+echo "	\"go.docsTool\": \"gogetdoc\"," >> $SETTINGS_FILE
+echo "	\"go.lintOnSave\": true," >> $SETTINGS_FILE
+echo "	\"go.gopath\": \"$PWD\"" >> $SETTINGS_FILE
+echo "}" >> $SETTINGS_FILE
 
 echo -e "\nInstalling tools for extension..."
 install_tool "gocode"     "github.com/nsf/gocode"
