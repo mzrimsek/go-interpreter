@@ -14,9 +14,9 @@ var (
 // Eval : Takes a Node and evaluates it into its corresponding Object
 func Eval(node ast.Node) object.Object {
 	switch node := node.(type) {
-	// Statements
 	case *ast.Program:
 		return evalProgram(node)
+	// Statements
 	case *ast.ExpressionStatement:
 		return Eval(node.Expression)
 	case *ast.BlockStatement:
