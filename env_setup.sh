@@ -17,7 +17,6 @@ install_tool() {
 }
 
 VSCODE_BIN=$(which code)
-
 if [ ! "$VSCODE_BIN" = "" ]; then
 	echo "Visual Studio Code installed...configuring..."
 
