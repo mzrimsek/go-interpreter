@@ -146,7 +146,7 @@ func TestErrorHandling(t *testing.T) {
 		{"5 + true; 5;", "type mismatch: INTEGER + BOOLEAN"},
 		{"-true", "unknown operator: -BOOLEAN"},
 		{"true + false;", "unknown operator: BOOLEAN + BOOLEAN"},
-		{"5; true + false; 5;", "unknown operator: BOOLEAN + BOOLEAN"},
+		{"5; true + false; 5", "unknown operator: BOOLEAN + BOOLEAN"},
 		{"if (10 > 1) { true + false; }", "unknown operator: BOOLEAN + BOOLEAN"},
 		{
 			`if (10 > 1) { 
@@ -228,6 +228,17 @@ func TestFunctionApplication(t *testing.T) {
 	for _, tt := range tests {
 		testIntegerObject(t, testEval(tt.input), tt.expected)
 	}
+}
+
+func TestClosures(t *testing.T) {
+	input := `let newAdder = fn(x) {
+				fn(y) { x + y };
+			};
+			
+			let addTwo = newAdder(2);
+			addTwo(2);`
+
+	testIntegerObject(t, testEval(input), 4)
 }
 
 func testEval(input string) object.Object {
