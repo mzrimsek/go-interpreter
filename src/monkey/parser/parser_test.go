@@ -255,6 +255,8 @@ func TestParsingInfixExpressions(t *testing.T) {
 		{"true == true", true, "==", true},
 		{"true != false", true, "!=", false},
 		{"false == false", false, "==", false},
+		{`"hello" == "hello"`, "hello", "==", "hello"},
+		{`"hello" != "goodbye"`, "hello", "!=", "goodbye"},
 	}
 
 	for _, tt := range infixTests {
@@ -637,7 +639,12 @@ func testLiteralExpression(t *testing.T, exp ast.Expression, expected interface{
 	case int64:
 		return testIntegerLiteral(t, exp, v)
 	case string:
-		return testIdentifier(t, exp, v)
+		switch exp.(type) {
+		case *ast.Identifier:
+			return testIdentifier(t, exp, v)
+		case *ast.StringLiteral:
+			return testStringLiteral(t, exp, v)
+		}
 	case bool:
 		return testBooleanLiteral(t, exp, v)
 	}
@@ -683,6 +690,26 @@ func testIntegerLiteral(t *testing.T, il ast.Expression, value int64) bool {
 
 	if integ.TokenLiteral() != fmt.Sprintf("%d", value) {
 		t.Errorf("integ.TokenLiteral not %d. got=%s", value, integ.TokenLiteral())
+		return false
+	}
+
+	return true
+}
+
+func testStringLiteral(t *testing.T, sl ast.Expression, value string) bool {
+	str, ok := sl.(*ast.StringLiteral)
+	if !ok {
+		t.Errorf("sl not ast.StringLiteral. got=%T", sl)
+		return false
+	}
+
+	if str.Value != value {
+		t.Errorf("str.Value not %q. got=%q", value, str.Value)
+		return false
+	}
+
+	if str.TokenLiteral() != value {
+		t.Errorf("str.TokenLiteral not %q. got=%s", value, str.TokenLiteral())
 		return false
 	}
 
