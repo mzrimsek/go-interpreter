@@ -10,6 +10,7 @@ The plan is to follow the book to completion then make some feature additions be
 * Increment and decrement operators
 * AND and OR operators
 * Escape characters
+* ~~String comparison~~
 * Ternary statements
 * Less Than or Equal and Greater Than or Equal operators
 * Else-If statements
