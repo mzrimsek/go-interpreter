@@ -1,3 +1,4 @@
+// Package repl : The "READ-EVAL-PRINT-LOOP" interactive language shell to work with Monkey code from the terminal
 package repl
 
 import (
@@ -11,8 +12,12 @@ import (
 	"os"
 )
 
+// PROMPT : The characters representing the start of each input line in the REPL
 const PROMPT = ">> "
-const MONKEY_FACE = `            __,__
+
+// MONKEY_FACE : The fun ASCII monkey face that shows up when a statement causes the REPL to error
+const MONKEY_FACE = `
+            __,__
    .--.  .-"     "-.  .--.
   / .. \/  .-. .-.  \/ .. \
  | |  '|  /   Y   \  |'  | |
@@ -25,6 +30,7 @@ const MONKEY_FACE = `            __,__
            '-----'
 `
 
+// Start : Starts an interactive shell session for a user to input Monkey code into
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
 	env := object.NewEnvironment()
