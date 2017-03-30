@@ -6,6 +6,8 @@ The plan is to follow the book to completion then make some feature additions be
 ## Planned Feature Additions
 * Float literals
 * Character literals
+* Variable redefining
+* Increment and decrement operators
 * Ternary statements
 * Less Than or Equal and Greater Than or Equal operators
 * AND and OR operators
