@@ -23,6 +23,10 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Dynamic list structure
 * Emojis
 
+### Todo
+* Extend test coverage for builtins
+* Extend tests to check for more types
+
 ## Setup
 1. Install Go ```sudo apt-get install golang-go```
 2. Clone this repo
