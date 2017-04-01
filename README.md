@@ -10,6 +10,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Escape characters
 * ~~String comparison~~
 * Concatenate basic data types to strings
+* String index expressions
 * Ternary statements
 * Less Than or Equal and Greater Than or Equal operators
 * Single and multi-line comments
