@@ -2,7 +2,6 @@
 An interpreter written in Go as described in [Writing An Interpreter In Go](https://interpreterbook.com/). The book is great and I highly recommend it.
 
 ## Planned Feature Additions
-* Read input from a file
 * Float literals
 * Character literals
 * Variable redefining
@@ -27,6 +26,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 ### Todo
 * Extend test coverage for builtins
 * Extend tests to check for more types
+* Read input from a file
 
 ## Setup
 1. Install Go ```sudo apt-get install golang-go```
