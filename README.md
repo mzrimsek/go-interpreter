@@ -4,7 +4,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 ## Planned Feature Additions
 * Float literals
 * Character literals
-* Variable redefining
+* Variable redefining (including shortcut assignment operators)
 * Increment and decrement operators
 * ~~AND and OR operators~~
 * Escape characters
