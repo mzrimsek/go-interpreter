@@ -322,16 +322,21 @@ func TestBuiltinFunctions(t *testing.T) {
 		{"first([])", NULL},
 		{"first([1, 2])", 1},
 		{`let myArray = [1, 2, 4]; first(myArray);`, 1},
+		{`first(["one", "two"])`, "one"},
 		{"first([1, 2], [3, 4])", "wrong number of arguments. got=2, want=1"},
 		{"first(1)", "argument to 'first' must be ARRAY, got INTEGER"},
 		{"last([])", NULL},
 		{"last([1, 2])", 2},
 		{`let myArray = [1, 2, 4]; last(myArray);`, 4},
+		{`last(["one", "two"])`, "two"},
 		{"last([1, 2], [3, 4])", "wrong number of arguments. got=2, want=1"},
 		{"last(1)", "argument to 'last' must be ARRAY, got INTEGER"},
 		{"tail([])", NULL},
+		{"tail([1, 2, 3])", []int{2, 3}},
 		{"tail([1, 2], [3, 4])", "wrong number of arguments. got=2, want=1"},
 		{"tail(1)", "argument to 'tail' must be ARRAY, got INTEGER"},
+		{"push([], 1)", []int{1}},
+		{"push([1, 2], 3)", []int{1, 2, 3}},
 		{"push([1, 2])", "wrong number of arguments. got=1, want=2"},
 		{"push(1, 1)", "argument to 'push' must be ARRAY, got INTEGER"},
 		{"type(1)", "INTEGER"},
@@ -356,6 +361,8 @@ func TestBuiltinFunctions(t *testing.T) {
 			if errObj.Message != expected {
 				t.Errorf("wrong error message. expected=%q, got=%q", expected, errObj.Message)
 			}
+		case []int:
+			testArrayObject(t, evaluated, expected)
 		}
 	}
 }
@@ -530,6 +537,29 @@ func testStringObject(t *testing.T, obj object.Object, expected string) bool {
 	if result.Value != expected {
 		t.Errorf("object has wrong value. got=%q, want=%q", result.Value, expected)
 		return false
+	}
+
+	return true
+}
+
+func testArrayObject(t *testing.T, obj object.Object, expected []int) bool {
+	result, ok := obj.(*object.Array)
+	if !ok {
+		t.Errorf("object. is not Array. got=%T, (%+v)", obj, obj)
+		return false
+	}
+
+	for index, val := range result.Elements {
+		integer, ok := val.(*object.Integer)
+		if !ok {
+			t.Errorf("array value not Integer. got=%T (%+v)", val, val)
+			return false
+		}
+
+		if integer.Value != int64(expected[index]) {
+			t.Errorf("array has wrong value at index. got=%d, want=%d", integer.Value, int64(expected[index]))
+			return false
+		}
 	}
 
 	return true
