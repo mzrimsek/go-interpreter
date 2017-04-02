@@ -15,10 +15,16 @@ const (
 	STRING_OBJ       = "STRING"
 	BUILTIN_OBJ      = "BUILTIN"
 	ARRAY_OBJ        = "ARRAY"
+	HASH_OBJ         = "HASH"
 )
 
 // Object : Generic object
 type Object interface {
 	Type() ObjectType
 	Inspect() string
+}
+
+// Hashable : Defines Objects that are usable as keys in a Hash
+type Hashable interface {
+	HashKey() HashKey
 }
