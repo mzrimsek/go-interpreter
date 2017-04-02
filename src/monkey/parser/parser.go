@@ -15,7 +15,7 @@ const (
 	LOWEST
 	ANDOR
 	EQUALS
-	LESSGREATER
+	COMPARISON
 	SUM
 	PRODUCT
 	PREFIX
@@ -28,8 +28,10 @@ var precedences = map[token.TokenType]int{
 	token.OR:       ANDOR,
 	token.EQ:       EQUALS,
 	token.NOT_EQ:   EQUALS,
-	token.LT:       LESSGREATER,
-	token.GT:       LESSGREATER,
+	token.LT:       COMPARISON,
+	token.GT:       COMPARISON,
+	token.LTE:      COMPARISON,
+	token.GTE:      COMPARISON,
 	token.PLUS:     SUM,
 	token.MINUS:    SUM,
 	token.SLASH:    PRODUCT,
@@ -89,6 +91,8 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.LBRACKET, p.parseIndexExpression)
 	p.registerInfix(token.AND, p.parseInfixExpression)
 	p.registerInfix(token.OR, p.parseInfixExpression)
+	p.registerInfix(token.LTE, p.parseInfixExpression)
+	p.registerInfix(token.GTE, p.parseInfixExpression)
 
 	p.nextToken()
 	p.nextToken()
