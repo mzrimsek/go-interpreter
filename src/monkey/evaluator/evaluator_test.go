@@ -172,6 +172,10 @@ func TestErrorHandling(t *testing.T) {
 		{"foobar", "identifier not found: foobar"},
 		{`"Hello" - "World"`, "unknown operator: STRING - STRING"},
 		{`{"name": "Monkey"}[fn(x) { x }];`, "unusable as hash key: FUNCTION"},
+		{"2 && false", "type mismatch: INTEGER && BOOLEAN"},
+		{`true && "hello"`, "type mismatch: BOOLEAN && STRING"},
+		{"2 || false", "type mismatch: INTEGER || BOOLEAN"},
+		{`true || "hello"`, "type mismatch: BOOLEAN || STRING"},
 	}
 
 	for _, tt := range tests {
