@@ -5,7 +5,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Float literals
 * Character literals
 * Variable redefining (including shortcut assignment operators)
-* Increment and decrement operators
+* Increment and decrement operators (post and pre)
 * ~~AND and OR operators~~
 * Escape characters
 * ~~String comparison~~
