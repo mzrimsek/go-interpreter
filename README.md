@@ -11,6 +11,9 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * ~~String comparison~~
 * ~~Concatenate basic data types to strings~~
 * String index expressions
+* Append to hash structure
+* Set array value at index
+* Set hash value at key
 * Ternary statements
 * ~~Less Than or Equal and Greater Than or Equal operators~~
 * Single and multi-line comments
