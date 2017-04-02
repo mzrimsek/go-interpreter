@@ -156,7 +156,7 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 		return evalIntegerInfixExpression(operator, left, right)
 	case left.Type() == object.STRING_OBJ && right.Type() == object.STRING_OBJ:
 		return evalStringInfixExpression(operator, left, right)
-	case (left.Type() == object.STRING_OBJ && right.Type() == object.INTEGER_OBJ) || (left.Type() == object.INTEGER_OBJ && right.Type() == object.STRING_OBJ):
+	case left.Type() == object.STRING_OBJ || right.Type() == object.STRING_OBJ:
 		return evalMixedTypeInfixExpression(operator, left, right)
 	case left.Type() == object.BOOLEAN_OBJ && right.Type() == object.BOOLEAN_OBJ:
 		return evalBooleanInfixExpression(operator, left, right)
@@ -214,6 +214,10 @@ func evalStringInfixExpression(operator string, left, right object.Object) objec
 }
 
 func evalMixedTypeInfixExpression(operator string, left, right object.Object) object.Object {
+	if left.Type() != object.INTEGER_OBJ && right.Type() != object.INTEGER_OBJ {
+		return newError("type mismatch: %s %s %s", left.Type(), operator, right.Type())
+	}
+
 	leftVal := left.Inspect()
 	rightVal := right.Inspect()
 
