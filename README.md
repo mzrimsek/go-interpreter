@@ -6,7 +6,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Character literals
 * Variable redefining
 * Increment and decrement operators
-* AND and OR operators
+* ~~AND and OR operators~~
 * Escape characters
 * ~~String comparison~~
 * Concatenate basic data types to strings
