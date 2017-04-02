@@ -176,6 +176,8 @@ func TestErrorHandling(t *testing.T) {
 		{`true && "hello"`, "type mismatch: BOOLEAN && STRING"},
 		{"2 || false", "type mismatch: INTEGER || BOOLEAN"},
 		{`true || "hello"`, "type mismatch: BOOLEAN || STRING"},
+		{`"hello" + false`, "type mismatch: STRING + BOOLEAN"},
+		{`"hello" - 3`, "unknown operator: STRING - INTEGER"},
 	}
 
 	for _, tt := range tests {
@@ -276,16 +278,26 @@ func TestStringLiteral(t *testing.T) {
 }
 
 func TestStringConcatenation(t *testing.T) {
-	input := `"Hello" + " " + "World!"`
-
-	evaluated := testEval(input)
-	str, ok := evaluated.(*object.String)
-	if !ok {
-		t.Fatalf("object is not String. got=%T (%+v)", evaluated, evaluated)
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{`"Hello" + " " + "World!"`, "Hello World!"},
+		{`"Hello" + 3`, "Hello3"},
+		{`3 + "Hello"`, "3Hello"},
 	}
 
-	if str.Value != "Hello World!" {
-		t.Fatalf("String has wrong value. got=%q", str.Value)
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+
+		str, ok := evaluated.(*object.String)
+		if !ok {
+			t.Fatalf("object is not String. got=%T (%+v)", evaluated, evaluated)
+		}
+
+		if str.Value != tt.expected {
+			t.Fatalf("String has wrong value. expected=%q, got=%q", tt.expected, str.Value)
+		}
 	}
 }
 
