@@ -13,6 +13,7 @@ import (
 const (
 	_ int = iota
 	LOWEST
+	ANDOR
 	EQUALS
 	LESSGREATER
 	SUM
@@ -23,6 +24,8 @@ const (
 )
 
 var precedences = map[token.TokenType]int{
+	token.AND:      ANDOR,
+	token.OR:       ANDOR,
 	token.EQ:       EQUALS,
 	token.NOT_EQ:   EQUALS,
 	token.LT:       LESSGREATER,
@@ -33,8 +36,6 @@ var precedences = map[token.TokenType]int{
 	token.ASTERISK: PRODUCT,
 	token.LPAREN:   CALL,
 	token.LBRACKET: INDEX,
-	token.AND:      LESSGREATER,
-	token.OR:       LESSGREATER,
 }
 
 type (
