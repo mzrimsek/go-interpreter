@@ -334,6 +334,10 @@ func TestBuiltinFunctions(t *testing.T) {
 		{"tail(1)", "argument to 'tail' must be ARRAY, got INTEGER"},
 		{"push([1, 2])", "wrong number of arguments. got=1, want=2"},
 		{"push(1, 1)", "argument to 'push' must be ARRAY, got INTEGER"},
+		{"type(1)", "INTEGER"},
+		{"type(1 - 5)", "INTEGER"},
+		{"type([])", "ARRAY"},
+		{`type("hello")`, "STRING"},
 	}
 
 	for _, tt := range tests {
@@ -345,7 +349,7 @@ func TestBuiltinFunctions(t *testing.T) {
 		case string:
 			errObj, ok := evaluated.(*object.Error)
 			if !ok {
-				t.Errorf("object is not Error. got=%T (%+v)", evaluated, evaluated)
+				testStringObject(t, evaluated, string(expected))
 				continue
 			}
 
