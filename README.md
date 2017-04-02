@@ -6,7 +6,9 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Character literals
 * Variable redefining (including shortcut assignment operators)
 * Increment and decrement operators (post and pre)
+* ~~Remainder operator~~
 * ~~AND and OR operators~~
+* ~~Less Than or Equal and Greater Than or Equal operators~~
 * Escape characters
 * ~~String comparison~~
 * ~~Concatenate basic data types to strings~~
@@ -15,7 +17,6 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Set array value at index
 * Set hash value at key
 * Ternary statements
-* ~~Less Than or Equal and Greater Than or Equal operators~~
 * Single and multi-line comments
 * Else-If statements
 * Switch statements
