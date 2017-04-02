@@ -13,8 +13,9 @@ import (
 const (
 	_ int = iota
 	LOWEST
+	ANDOR
 	EQUALS
-	LESSGREATER
+	COMPARISON
 	SUM
 	PRODUCT
 	PREFIX
@@ -23,10 +24,14 @@ const (
 )
 
 var precedences = map[token.TokenType]int{
+	token.AND:      ANDOR,
+	token.OR:       ANDOR,
 	token.EQ:       EQUALS,
 	token.NOT_EQ:   EQUALS,
-	token.LT:       LESSGREATER,
-	token.GT:       LESSGREATER,
+	token.LT:       COMPARISON,
+	token.GT:       COMPARISON,
+	token.LTE:      COMPARISON,
+	token.GTE:      COMPARISON,
 	token.PLUS:     SUM,
 	token.MINUS:    SUM,
 	token.SLASH:    PRODUCT,
@@ -71,6 +76,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(token.FUNCTION, p.parseFunctionLiteral)
 	p.registerPrefix(token.STRING, p.parseStringLiteral)
 	p.registerPrefix(token.LBRACKET, p.parseArrayLiteral)
+	p.registerPrefix(token.LBRACE, p.parseHashLiteral)
 
 	p.infixParseFns = make(map[token.TokenType]infixParseFn)
 	p.registerInfix(token.PLUS, p.parseInfixExpression)
@@ -83,6 +89,10 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.GT, p.parseInfixExpression)
 	p.registerInfix(token.LPAREN, p.parseCallExpression)
 	p.registerInfix(token.LBRACKET, p.parseIndexExpression)
+	p.registerInfix(token.AND, p.parseInfixExpression)
+	p.registerInfix(token.OR, p.parseInfixExpression)
+	p.registerInfix(token.LTE, p.parseInfixExpression)
+	p.registerInfix(token.GTE, p.parseInfixExpression)
 
 	p.nextToken()
 	p.nextToken()
@@ -462,4 +472,32 @@ func (p *Parser) parseIndexExpression(left ast.Expression) ast.Expression {
 
 	return exp
 
+}
+
+func (p *Parser) parseHashLiteral() ast.Expression {
+	hash := &ast.HashLiteral{Token: p.curToken}
+	hash.Pairs = make(map[ast.Expression]ast.Expression)
+
+	for !p.peekTokenIs(token.RBRACE) {
+		p.nextToken()
+		key := p.parseExpression(LOWEST)
+
+		if !p.expectPeek(token.COLON) {
+			return nil
+		}
+
+		p.nextToken()
+		value := p.parseExpression(LOWEST)
+		hash.Pairs[key] = value
+
+		if !p.peekTokenIs(token.RBRACE) && !p.expectPeek(token.COMMA) {
+			return nil
+		}
+	}
+
+	if !p.expectPeek(token.RBRACE) {
+		return nil
+	}
+
+	return hash
 }

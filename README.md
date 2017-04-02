@@ -2,18 +2,17 @@
 An interpreter written in Go as described in [Writing An Interpreter In Go](https://interpreterbook.com/). The book is great and I highly recommend it.
 
 ## Planned Feature Additions
-* Read input from a file
 * Float literals
 * Character literals
-* Variable redefining
-* Increment and decrement operators
-* AND and OR operators
+* Variable redefining (including shortcut assignment operators)
+* Increment and decrement operators (post and pre)
+* ~~AND and OR operators~~
 * Escape characters
 * ~~String comparison~~
-* Concatenate basic data types to strings
+* ~~Concatenate basic data types to strings~~
 * String index expressions
 * Ternary statements
-* Less Than or Equal and Greater Than or Equal operators
+* ~~Less Than or Equal and Greater Than or Equal operators~~
 * Single and multi-line comments
 * Else-If statements
 * Switch statements
@@ -27,6 +26,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 ### Todo
 * Extend test coverage for builtins
 * Extend tests to check for more types
+* Read input from a file
 
 ## Setup
 1. Install Go ```sudo apt-get install golang-go```

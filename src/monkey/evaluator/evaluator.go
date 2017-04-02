@@ -82,6 +82,8 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 			return elements[0]
 		}
 		return &object.Array{Elements: elements}
+	case *ast.HashLiteral:
+		return evalHashLiteral(node, env)
 	case *ast.IndexExpression:
 		left := Eval(node.Left, env)
 		if isError(left) {
@@ -154,6 +156,10 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 		return evalIntegerInfixExpression(operator, left, right)
 	case left.Type() == object.STRING_OBJ && right.Type() == object.STRING_OBJ:
 		return evalStringInfixExpression(operator, left, right)
+	case left.Type() == object.STRING_OBJ || right.Type() == object.STRING_OBJ:
+		return evalMixedTypeInfixExpression(operator, left, right)
+	case left.Type() == object.BOOLEAN_OBJ && right.Type() == object.BOOLEAN_OBJ:
+		return evalBooleanInfixExpression(operator, left, right)
 	case operator == "==":
 		return nativeBoolToBooleanObject(left == right)
 	case operator == "!=":
@@ -182,6 +188,10 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 		return nativeBoolToBooleanObject(leftVal < rightVal)
 	case ">":
 		return nativeBoolToBooleanObject(leftVal > rightVal)
+	case "<=":
+		return nativeBoolToBooleanObject(leftVal <= rightVal)
+	case ">=":
+		return nativeBoolToBooleanObject(leftVal >= rightVal)
 	case "==":
 		return nativeBoolToBooleanObject(leftVal == rightVal)
 	case "!=":
@@ -198,6 +208,40 @@ func evalStringInfixExpression(operator string, left, right object.Object) objec
 	switch operator {
 	case "+":
 		return &object.String{Value: leftVal + rightVal}
+	case "==":
+		return nativeBoolToBooleanObject(leftVal == rightVal)
+	case "!=":
+		return nativeBoolToBooleanObject(leftVal != rightVal)
+	default:
+		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
+	}
+}
+
+func evalMixedTypeInfixExpression(operator string, left, right object.Object) object.Object {
+	if left.Type() != object.INTEGER_OBJ && right.Type() != object.INTEGER_OBJ {
+		return newError("type mismatch: %s %s %s", left.Type(), operator, right.Type())
+	}
+
+	leftVal := left.Inspect()
+	rightVal := right.Inspect()
+
+	switch operator {
+	case "+":
+		return &object.String{Value: leftVal + rightVal}
+	default:
+		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
+	}
+}
+
+func evalBooleanInfixExpression(operator string, left, right object.Object) object.Object {
+	leftVal := left.(*object.Boolean).Value
+	rightVal := right.(*object.Boolean).Value
+
+	switch operator {
+	case "&&":
+		return nativeBoolToBooleanObject(leftVal && rightVal)
+	case "||":
+		return nativeBoolToBooleanObject(leftVal || rightVal)
 	case "==":
 		return nativeBoolToBooleanObject(leftVal == rightVal)
 	case "!=":
@@ -300,6 +344,8 @@ func evalIndexExpression(left, index object.Object) object.Object {
 	switch {
 	case left.Type() == object.ARRAY_OBJ && index.Type() == object.INTEGER_OBJ:
 		return evalArrayIndexExpression(left, index)
+	case left.Type() == object.HASH_OBJ:
+		return evalHashIndexExpression(left, index)
 	default:
 		return newError("index operator not supported: %s", left.Type())
 	}
@@ -315,4 +361,46 @@ func evalArrayIndexExpression(left, index object.Object) object.Object {
 	}
 
 	return arrayObject.Elements[idx]
+}
+
+func evalHashLiteral(node *ast.HashLiteral, env *object.Environment) object.Object {
+	pairs := make(map[object.HashKey]object.HashPair)
+
+	for keyNode, valueNode := range node.Pairs {
+		key := Eval(keyNode, env)
+		if isError(key) {
+			return key
+		}
+
+		hashKey, ok := key.(object.Hashable)
+		if !ok {
+			return newError("unusable as hash key: %s", key.Type())
+		}
+
+		value := Eval(valueNode, env)
+		if isError(value) {
+			return value
+		}
+
+		hashed := hashKey.HashKey()
+		pairs[hashed] = object.HashPair{Key: key, Value: value}
+	}
+
+	return &object.Hash{Pairs: pairs}
+}
+
+func evalHashIndexExpression(hash, index object.Object) object.Object {
+	hashObject := hash.(*object.Hash)
+
+	key, ok := index.(object.Hashable)
+	if !ok {
+		return newError("unusable as hash key: %s", index.Type())
+	}
+
+	pair, ok := hashObject.Pairs[key.HashKey()]
+	if !ok {
+		return NULL
+	}
+
+	return pair.Value
 }

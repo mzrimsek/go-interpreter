@@ -9,7 +9,7 @@ func TestNextToken(t *testing.T) {
 	input := `let five = 5;
 			  let ten = 10;  
 			  let add = fn(x, y) {
-			  x + y;
+			  	x + y;
 			  };  
 			  let result = add(five, ten);
 			  !-/*5;
@@ -23,7 +23,11 @@ func TestNextToken(t *testing.T) {
 			  10 != 9;
 			  "foobar"
 			  "foo bar"
-			  [1, 2];`
+			  [1, 2];
+			  {"foo": "bar"}
+			  true && true;
+			  true || false;
+			  2 <= 3 >= 2;`
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -109,6 +113,25 @@ func TestNextToken(t *testing.T) {
 		{token.COMMA, ","},
 		{token.INT, "2"},
 		{token.RBRACKET, "]"},
+		{token.SEMICOLON, ";"},
+		{token.LBRACE, "{"},
+		{token.STRING, "foo"},
+		{token.COLON, ":"},
+		{token.STRING, "bar"},
+		{token.RBRACE, "}"},
+		{token.TRUE, "true"},
+		{token.AND, "&&"},
+		{token.TRUE, "true"},
+		{token.SEMICOLON, ";"},
+		{token.TRUE, "true"},
+		{token.OR, "||"},
+		{token.FALSE, "false"},
+		{token.SEMICOLON, ";"},
+		{token.INT, "2"},
+		{token.LTE, "<="},
+		{token.INT, "3"},
+		{token.GTE, ">="},
+		{token.INT, "2"},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}

@@ -1,5 +1,7 @@
 package object
 
+import "hash/fnv"
+
 // String : Object representing a string
 type String struct {
 	Value string
@@ -13,4 +15,12 @@ func (s *String) Type() ObjectType {
 // Inspect : Returns string representation of Object's value
 func (s *String) Inspect() string {
 	return s.Value
+}
+
+// HashKey : Generates a HashKey
+func (s *String) HashKey() HashKey {
+	h := fnv.New64a()
+	h.Write([]byte(s.Value))
+
+	return HashKey{Type: s.Type(), Value: h.Sum64()}
 }
