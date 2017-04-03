@@ -19,5 +19,10 @@ func (f *Float) Type() ObjectType {
 
 // Inspect : Returns string representation of Object's value
 func (f *Float) Inspect() string {
-	return strings.TrimRight(fmt.Sprintf("%f", f.Value), "0")
+	unformatted := fmt.Sprintf("%f", f.Value)
+	trimmed := strings.TrimRight(unformatted, "0")
+	if trimmed[len(trimmed)-1] == '.' {
+		trimmed += "0"
+	}
+	return trimmed
 }

@@ -336,6 +336,7 @@ func TestStringConcatenation(t *testing.T) {
 		{`3 + "Hello"`, "3Hello"},
 		{`"Hello" + 3.5`, "Hello3.5"},
 		{`3.5 + "Hello"`, "3.5Hello"},
+		{`(12 * .5) + "Hello"`, "6.0Hello"},
 	}
 
 	for _, tt := range tests {
