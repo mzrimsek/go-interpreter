@@ -37,6 +37,35 @@ func TestEvalIntegerExpression(t *testing.T) {
 	}
 }
 
+func TestEvalFloatExpression(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected float64
+	}{
+		{"5.5", 5.5},
+		{"10.3", 10.3},
+		{"-5.5", -5.5},
+		{"-10.3", -10.3},
+		{"5 + 5.5 + 5 + 5.5 - 10.5", 10.5},
+		{"2 * 2.5 * 2 * 2.5 * 0.5", 12.5},
+		{"-5.5 + 0.3 + -5.5", 0.3},
+		{"5.2 * 2 + 10", 20.4},
+		{"5.5 + 2 * 10", 55.0},
+		{"20 + 2.5 * -10", -5.0},
+		{"50 / 4 * 2 + 10.5", 35.5},
+		{"2 * (5.3 + 10)", 30.6},
+		{"3 * 3 * 3 + 10.5", 37.5},
+		{"3 * (3.5 * 3) + 10", 41.5},
+		{"(5 + 10 * 2 + 15 / 2) * 2 + -10", 55.0},
+		{"3.5 % 2", 1.5},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testFloatObject(t, evaluated, tt.expected)
+	}
+}
+
 func TestEvalBooleanExpressions(t *testing.T) {
 	tests := []struct {
 		input    string
@@ -54,6 +83,12 @@ func TestEvalBooleanExpressions(t *testing.T) {
 		{"1 != 1", false},
 		{"1 == 2", false},
 		{"1 != 2", true},
+		{"1 > 2 && 2 == 2", false},
+		{"1 > 2 || 2 == 2", true},
+		{"1 <= 2", true},
+		{"1 >= 2", false},
+		{"1 <= 1", true},
+		{"1 >= 1", true},
 		{"true == true", true},
 		{"false == false", true},
 		{"true == false", false},
@@ -75,12 +110,20 @@ func TestEvalBooleanExpressions(t *testing.T) {
 		{"true || false", true},
 		{"false || true", true},
 		{"false || false", false},
-		{"1 > 2 && 2 == 2", false},
-		{"1 > 2 || 2 == 2", true},
-		{"1 <= 2", true},
-		{"1 >= 2", false},
-		{"1 <= 1", true},
-		{"1 >= 1", true},
+		{"1.5 < 2", true},
+		{"1.5 > 2", false},
+		{"1.5 < 1.5", false},
+		{"1.5 > 1.5", false},
+		{"1.5 == 1.5", true},
+		{"1.5 != 1.5", false},
+		{"1.5 == 2", false},
+		{"1.5 != 2", true},
+		{"1.5 > 2 && 2 == 2", false},
+		{"1.5 > 2 || 2 == 2", true},
+		{"1.5 <= 2", true},
+		{"1.5 >= 2", false},
+		{"1.5 <= 1.5", true},
+		{"1.5 >= 1.5", true},
 	}
 
 	for _, tt := range tests {
@@ -291,6 +334,8 @@ func TestStringConcatenation(t *testing.T) {
 		{`"Hello" + " " + "World!"`, "Hello World!"},
 		{`"Hello" + 3`, "Hello3"},
 		{`3 + "Hello"`, "3Hello"},
+		{`"Hello" + 3.5`, "Hello3.5"},
+		{`3.5 + "Hello"`, "3.5Hello"},
 	}
 
 	for _, tt := range tests {
@@ -302,7 +347,7 @@ func TestStringConcatenation(t *testing.T) {
 		}
 
 		if str.Value != tt.expected {
-			t.Fatalf("String has wrong value. expected=%q, got=%q", tt.expected, str.Value)
+			t.Errorf("String has wrong value. expected=%q, got=%q", tt.expected, str.Value)
 		}
 	}
 }
@@ -500,6 +545,21 @@ func testIntegerObject(t *testing.T, obj object.Object, expected int64) bool {
 
 	if result.Value != expected {
 		t.Errorf("object has wrong value. got=%d, want=%d", result.Value, expected)
+		return false
+	}
+
+	return true
+}
+
+func testFloatObject(t *testing.T, obj object.Object, expected float64) bool {
+	result, ok := obj.(*object.Float)
+	if !ok {
+		t.Errorf("object is not Float. got=%T (%+v)", obj, obj)
+		return false
+	}
+
+	if result.Value != expected {
+		t.Errorf("object has wrong value. got=%f, want=%f", result.Value, expected)
 		return false
 	}
 
