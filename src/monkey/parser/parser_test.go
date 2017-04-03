@@ -228,6 +228,8 @@ func TestParsingPrefixExpressions(t *testing.T) {
 		{"-foobar;", "-", "foobar"},
 		{"!true;", "!", true},
 		{"!false;", "!", false},
+		{"!5.5;", "!", 5.5},
+		{"-15.5;", "-", 15.5},
 	}
 
 	for _, tt := range prefixTests {
@@ -380,6 +382,7 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 		{"5 <= 4 != 3 >= 4", "((5 <= 4) != (3 >= 4))"},
 		{"(5 + 5) % 2", "((5 + 5) % 2)"},
 		{"add(6 % 5, 1, 3 * 4, add(7 % 3, 2 + 1, 4 / 2))", "add((6 % 5), 1, (3 * 4), add((7 % 3), (2 + 1), (4 / 2)))"},
+		{"3.2 + 4; -5.2 * 5", "(3.2 + 4)((-5.2) * 5)"},
 	}
 
 	for _, tt := range tests {
@@ -631,7 +634,7 @@ func TestStringLiteralExpression(t *testing.T) {
 }
 
 func TestParsingArrayLiterals(t *testing.T) {
-	input := "[1, 2 * 2, 3 + 3]"
+	input := "[1, 2 * 2, 3 + 3, 4.5, -5]"
 
 	l := lexer.New(input)
 	p := New(l)
@@ -645,13 +648,15 @@ func TestParsingArrayLiterals(t *testing.T) {
 		t.Fatalf("stmt.Expression not ast.ArrayLiteral. got=%T", stmt.Expression)
 	}
 
-	if len(array.Elements) != 3 {
-		t.Fatalf("array has not enough elements. want 3, got=%d", len(array.Elements))
+	if len(array.Elements) != 5 {
+		t.Fatalf("array has not enough elements. want 5, got=%d", len(array.Elements))
 	}
 
 	testIntegerLiteral(t, array.Elements[0], 1)
 	testInfixExpression(t, array.Elements[1], 2, "*", 2)
 	testInfixExpression(t, array.Elements[2], 3, "+", 3)
+	testFloatLiteral(t, array.Elements[3], 4.5)
+	testPrefixExpression(t, array.Elements[4], "-", 5)
 }
 
 func TestParsingIndexExpressions(t *testing.T) {
@@ -870,10 +875,29 @@ func testLiteralExpression(t *testing.T, exp ast.Expression, expected interface{
 	return false
 }
 
+func testPrefixExpression(t *testing.T, exp ast.Expression, operator string, right interface{}) bool {
+	opExp, ok := exp.(*ast.PrefixExpression)
+	if !ok {
+		t.Errorf("exp is not ast.PrefixExpression. got=%T (%s)", exp, exp)
+		return false
+	}
+
+	if opExp.Operator != operator {
+		t.Errorf("exp.Operator is not '%s'. got=%q", operator, opExp.Operator)
+		return false
+	}
+
+	if !testLiteralExpression(t, opExp.Right, right) {
+		return false
+	}
+
+	return true
+}
+
 func testInfixExpression(t *testing.T, exp ast.Expression, left interface{}, operator string, right interface{}) bool {
 	opExp, ok := exp.(*ast.InfixExpression)
 	if !ok {
-		t.Errorf("exp is not ast.OperatorExpression. got=%T (%s)", exp, exp)
+		t.Errorf("exp is not ast.InfixExpression. got=%T (%s)", exp, exp)
 		return false
 	}
 
