@@ -30,7 +30,11 @@ func TestNextToken(t *testing.T) {
 			  2 <= 3 >= 2;
 			  3 % 2;
 			  let half = .5;
-			  let pi = 3.14159;`
+			  let pi = 3.14159;
+			  x++;
+			  x--;
+			  ++x;
+			  --x;`
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -149,6 +153,18 @@ func TestNextToken(t *testing.T) {
 		{token.IDENT, "pi"},
 		{token.ASSIGN, "="},
 		{token.FLOAT, "3.14159"},
+		{token.SEMICOLON, ";"},
+		{token.IDENT, "x"},
+		{token.INCREMENT, "++"},
+		{token.SEMICOLON, ";"},
+		{token.IDENT, "x"},
+		{token.DECREMENT, "--"},
+		{token.SEMICOLON, ";"},
+		{token.INCREMENT, "++"},
+		{token.IDENT, "x"},
+		{token.SEMICOLON, ";"},
+		{token.DECREMENT, "--"},
+		{token.IDENT, "x"},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}

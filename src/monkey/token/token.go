@@ -35,6 +35,9 @@ const (
 	AND = "&&"
 	OR  = "||"
 
+	INCREMENT = "++"
+	DECREMENT = "--"
+
 	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
