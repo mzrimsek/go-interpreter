@@ -2,6 +2,7 @@
 package lexer
 
 import "monkey/token"
+import "strings"
 
 // Lexer : Handles analyzing and tokenizing program input character by character
 type Lexer struct {
@@ -113,8 +114,13 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.ch) {
-			tok.Type = token.INT
-			tok.Literal = l.readNumber()
+			literal := l.readNumber()
+			if strings.Contains(literal, ".") {
+				tok.Type = token.FLOAT
+			} else {
+				tok.Type = token.INT
+			}
+			tok.Literal = literal
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
@@ -158,7 +164,7 @@ func (l *Lexer) readIdentifier() string {
 
 func (l *Lexer) readNumber() string {
 	position := l.position
-	for isDigit(l.ch) {
+	for isDigit(l.ch) || l.ch == '.' {
 		l.readChar()
 	}
 	return l.input[position:l.position]
