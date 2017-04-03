@@ -4,8 +4,10 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 ## Planned Feature Additions
 * ~~Float literals~~
 * Character literals
-* Variable redefining (including shortcut assignment operators)
-* Increment and decrement operators (post and pre)
+* Variable assignment
+* Assignment shortcut operators
+* Pre-Increment and Pre-Decrement operators
+* Post-Increment and Post-Decrement operators
 * ~~Remainder operator~~
 * ~~AND and OR operators~~
 * ~~Less Than or Equal and Greater Than or Equal operators~~
