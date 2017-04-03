@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"monkey/ast"
 	"monkey/lexer"
+	"strings"
 	"testing"
 )
 
@@ -143,17 +144,8 @@ func TestFloatLiteralExpression(t *testing.T) {
 		t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
 	}
 
-	literal, ok := stmt.Expression.(*ast.FloatLiteral)
-	if !ok {
-		t.Fatalf("stmt.Expression not ast.FloatLiteral. got=%T", stmt.Expression)
-	}
-
-	if literal.Value != 3.14159 {
-		t.Errorf("literal.Value not %f. got=%f", 3.14159, literal.Value)
-	}
-
-	if literal.TokenLiteral() != "3.14159" {
-		t.Errorf("literal.TokenLiteral not %s. got=%s", "3.14159", literal.TokenLiteral())
+	if testFloatLiteral(t, stmt.Expression, 3.14159) {
+		return
 	}
 }
 
@@ -354,7 +346,7 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 		{"5 <= 4 != 3 >= 4", "((5 <= 4) != (3 >= 4))"},
 		{"(5 + 5) % 2", "((5 + 5) % 2)"},
 		{"add(6 % 5, 1, 3 * 4, add(7 % 3, 2 + 1, 4 / 2))", "add((6 % 5), 1, (3 * 4), add((7 % 3), (2 + 1), (4 / 2)))"},
-		{"3.2 + 4; -5.2 * 5", "(3.2 + 4)((-5.2) * 5)"},
+		{"3.25 + 4; -5.2 * 5", "(3.25 + 4)((-5.2) * 5)"},
 	}
 
 	for _, tt := range tests {
@@ -921,7 +913,7 @@ func testFloatLiteral(t *testing.T, il ast.Expression, value float64) bool {
 		return false
 	}
 
-	if float.TokenLiteral() != fmt.Sprintf("%.1f", value) {
+	if float.TokenLiteral() != strings.TrimRight(fmt.Sprintf("%f", value), "0") {
 		t.Errorf("float.TokenLiteral not %f. got=%s", value, float.TokenLiteral())
 		return false
 	}
