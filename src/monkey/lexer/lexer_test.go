@@ -29,7 +29,7 @@ func TestNextToken(t *testing.T) {
 			  true || false;
 			  2 <= 3 >= 2;
 			  3 % 2;
-			  let half = 0.5;
+			  let half = .5;
 			  let pi = 3.14159;`
 
 	tests := []struct {
@@ -143,7 +143,7 @@ func TestNextToken(t *testing.T) {
 		{token.LET, "let"},
 		{token.IDENT, "half"},
 		{token.ASSIGN, "="},
-		{token.FLOAT, "0.5"},
+		{token.FLOAT, ".5"},
 		{token.SEMICOLON, ";"},
 		{token.LET, "let"},
 		{token.IDENT, "pi"},
