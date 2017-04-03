@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"monkey/ast"
 	"monkey/lexer"
-	"strings"
 	"testing"
 )
 
@@ -909,12 +908,12 @@ func testFloatLiteral(t *testing.T, il ast.Expression, value float64) bool {
 	}
 
 	if float.Value != value {
-		t.Errorf("float.Value not %f. got=%f", value, float.Value)
+		t.Errorf("float.Value not %g. got=%g", value, float.Value)
 		return false
 	}
 
-	if float.TokenLiteral() != strings.TrimRight(fmt.Sprintf("%f", value), "0") {
-		t.Errorf("float.TokenLiteral not %f. got=%s", value, float.TokenLiteral())
+	if float.TokenLiteral() != fmt.Sprintf("%g", value) {
+		t.Errorf("float.TokenLiteral not %g. got=%s", value, float.TokenLiteral())
 		return false
 	}
 

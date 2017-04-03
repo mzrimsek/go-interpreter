@@ -2,7 +2,6 @@ package object
 
 import (
 	"fmt"
-	"strings"
 )
 
 // Float : Object representing a float
@@ -19,10 +18,5 @@ func (f *Float) Type() ObjectType {
 
 // Inspect : Returns string representation of Object's value
 func (f *Float) Inspect() string {
-	unformatted := fmt.Sprintf("%f", f.Value)
-	trimmed := strings.TrimRight(unformatted, "0")
-	if trimmed[len(trimmed)-1] == '.' {
-		trimmed += "0"
-	}
-	return trimmed
+	return fmt.Sprintf("%g", f.Value)
 }
