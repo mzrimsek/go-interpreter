@@ -145,6 +145,38 @@ func TestIntegerLiteralExpression(t *testing.T) {
 	}
 }
 
+func TestFloatLiteralExpression(t *testing.T) {
+	input := "3.14159;"
+
+	l := lexer.New(input)
+	p := New(l)
+
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	if len(program.Statements) != 1 {
+		t.Fatalf("program.Statements does not have enough statements. got=%d", len(program.Statements))
+	}
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
+	}
+
+	literal, ok := stmt.Expression.(*ast.FloatLiteral)
+	if !ok {
+		t.Fatalf("stmt.Expression not ast.FloatLiteral. got=%T", stmt.Expression)
+	}
+
+	if literal.Value != 3.14159 {
+		t.Errorf("literal.Value not %f. got=%f", 3.14159, literal.Value)
+	}
+
+	if literal.TokenLiteral() != "3.14159" {
+		t.Errorf("literal.TokenLiteral not %s. got=%s", "3.14159", literal.TokenLiteral())
+	}
+}
+
 func TestBooleanExpression(t *testing.T) {
 	tests := []struct {
 		input           string
@@ -244,6 +276,9 @@ func TestParsingInfixExpressions(t *testing.T) {
 		{"5 < 5;", 5, "<", 5},
 		{"5 == 5;", 5, "==", 5},
 		{"5 != 5;", 5, "!=", 5},
+		{"5 >= 5", 5, ">=", 5},
+		{"5 <= 5", 5, "<=", 5},
+		{"5 % 5", 5, "%", 5},
 		{"foobar + barfoo;", "foobar", "+", "barfoo"},
 		{"foobar - barfoo;", "foobar", "-", "barfoo"},
 		{"foobar * barfoo;", "foobar", "*", "barfoo"},
@@ -262,9 +297,17 @@ func TestParsingInfixExpressions(t *testing.T) {
 		{"true || false", true, "||", false},
 		{`"hello" + 3`, "hello", "+", 3},
 		{`3 + "hello"`, 3, "+", "hello"},
-		{"5 >= 5", 5, ">=", 5},
-		{"5 <= 5", 5, "<=", 5},
-		{"5 % 5;", 5, "%", 5},
+		{"3.5 + 3.5;", 3.5, "+", 3.5},
+		{"3.5 - 3.5;", 3.5, "-", 3.5},
+		{"3.5 * 3.5;", 3.5, "*", 3.5},
+		{"3.5 / 3.5;", 3.5, "/", 3.5},
+		{"3.5 > 3.5;", 3.5, ">", 3.5},
+		{"3.5 < 3.5;", 3.5, "<", 3.5},
+		{"3.5 == 3.5;", 3.5, "==", 3.5},
+		{"3.5 != 3.5;", 3.5, "!=", 3.5},
+		{"3.5 >= 3.5", 3.5, ">=", 3.5},
+		{"3.5 <= 3.5", 3.5, "<=", 3.5},
+		{"3.5 % 3.5", 3.5, "%", 3.5},
 	}
 
 	for _, tt := range infixTests {
@@ -810,6 +853,8 @@ func testLiteralExpression(t *testing.T, exp ast.Expression, expected interface{
 		return testIntegerLiteral(t, exp, int64(v))
 	case int64:
 		return testIntegerLiteral(t, exp, v)
+	case float64:
+		return testFloatLiteral(t, exp, v)
 	case string:
 		switch exp.(type) {
 		case *ast.Identifier:
@@ -862,6 +907,26 @@ func testIntegerLiteral(t *testing.T, il ast.Expression, value int64) bool {
 
 	if integ.TokenLiteral() != fmt.Sprintf("%d", value) {
 		t.Errorf("integ.TokenLiteral not %d. got=%s", value, integ.TokenLiteral())
+		return false
+	}
+
+	return true
+}
+
+func testFloatLiteral(t *testing.T, il ast.Expression, value float64) bool {
+	float, ok := il.(*ast.FloatLiteral)
+	if !ok {
+		t.Errorf("il not ast.FloatLiteral. got=%T", il)
+		return false
+	}
+
+	if float.Value != value {
+		t.Errorf("float.Value not %f. got=%f", value, float.Value)
+		return false
+	}
+
+	if float.TokenLiteral() != fmt.Sprintf("%.1f", value) {
+		t.Errorf("float.TokenLiteral not %f. got=%s", value, float.TokenLiteral())
 		return false
 	}
 
