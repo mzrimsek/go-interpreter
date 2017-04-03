@@ -58,6 +58,7 @@ func TestEvalFloatExpression(t *testing.T) {
 		{"3 * (3.5 * 3) + 10", 41.5},
 		{"(5 + 10 * 2 + 15.0 / 2) * 2 + -10", 55.0},
 		{"3.5 % 2", 1.5},
+		{".5 * 0.5", .25},
 	}
 
 	for _, tt := range tests {
