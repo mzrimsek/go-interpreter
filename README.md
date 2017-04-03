@@ -2,7 +2,7 @@
 An interpreter written in Go as described in [Writing An Interpreter In Go](https://interpreterbook.com/). The book is great and I highly recommend it.
 
 ## Planned Feature Additions
-* Float literals
+* ~~Float literals~~
 * Character literals
 * Variable redefining (including shortcut assignment operators)
 * Increment and decrement operators (post and pre)
