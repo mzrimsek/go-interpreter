@@ -25,6 +25,11 @@ type Object interface {
 	Inspect() string
 }
 
+// Number : Generic number type
+type Number interface {
+	number()
+}
+
 // Hashable : Defines Objects that are usable as keys in a Hash
 type Hashable interface {
 	HashKey() HashKey
