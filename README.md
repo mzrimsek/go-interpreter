@@ -6,8 +6,8 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Character literals
 * Variable assignment
 * Assignment shortcut operators
-* Pre-Increment and Pre-Decrement operators
-* Post-Increment and Post-Decrement operators
+* ~~Prefix Increment and Decrement operators~~
+* Postfix Increment and Decrement operators
 * ~~Remainder operator~~
 * ~~AND and OR operators~~
 * ~~Less Than or Equal and Greater Than or Equal operators~~
