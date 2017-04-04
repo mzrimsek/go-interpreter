@@ -5,6 +5,7 @@ import (
 	"math"
 	"monkey/ast"
 	"monkey/object"
+	"strings"
 )
 
 // Single reference Objects
@@ -294,12 +295,20 @@ func evalStringInfixExpression(operator string, left, right object.Object) objec
 }
 
 func evalMixedTypeInfixExpression(operator string, left, right object.Object) object.Object {
-	leftVal := left.Inspect()
-	rightVal := right.Inspect()
-
 	switch operator {
 	case "+":
-		return &object.String{Value: leftVal + rightVal}
+		return &object.String{Value: left.Inspect() + right.Inspect()}
+	case "*":
+		switch {
+		case left.Type() == object.INTEGER_OBJ:
+			integer := left.(*object.Integer).Value
+			return &object.String{Value: strings.Repeat(right.Inspect(), int(integer))}
+		case right.Type() == object.INTEGER_OBJ:
+			integer := right.(*object.Integer).Value
+			return &object.String{Value: strings.Repeat(left.Inspect(), int(integer))}
+		default:
+			return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
+		}
 	default:
 		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
 	}

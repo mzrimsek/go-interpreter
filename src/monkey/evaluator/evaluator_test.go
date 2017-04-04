@@ -240,6 +240,8 @@ func TestErrorHandling(t *testing.T) {
 		{`"hello" - 3`, "unknown operator: STRING - INTEGER"},
 		{`++"hello"`, "unknown operator: ++STRING"},
 		{`--"hello"`, "unknown operator: --STRING"},
+		{`3.5 * "hello"`, "unknown operator: FLOAT * STRING"},
+		{`"hello" * 3.5`, "unknown operator: STRING * FLOAT"},
 	}
 
 	for _, tt := range tests {
@@ -351,6 +353,8 @@ func TestStringConcatenation(t *testing.T) {
 		{`3.5 + "Hello"`, "3.5Hello"},
 		{`(12 * .5) + "Hello"`, "6Hello"},
 		{`6.0 + "Hello"`, "6Hello"},
+		{`"Hello" * 3`, "HelloHelloHello"},
+		{`3 * "Hello"`, "HelloHelloHello"},
 	}
 
 	for _, tt := range tests {
