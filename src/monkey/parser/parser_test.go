@@ -230,49 +230,6 @@ func TestParsingPrefixExpressions(t *testing.T) {
 	}
 }
 
-func TestParsingPostfixExpressions(t *testing.T) {
-	prefixTests := []struct {
-		input    string
-		value    interface{}
-		operator string
-	}{
-		{"5++", 5, "++"},
-		{"5--", 5, "--"},
-		{"x++", "x", "++"},
-		{"x--", "x", "--"},
-	}
-
-	for _, tt := range prefixTests {
-		l := lexer.New(tt.input)
-		p := New(l)
-
-		program := p.ParseProgram()
-		checkParserErrors(t, p)
-
-		if len(program.Statements) != 1 {
-			t.Fatalf("program.Statements does not contain %d statements. got=%d", 1, len(program.Statements))
-		}
-
-		stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
-		if !ok {
-			t.Fatalf("program.Statements[0] not ast.ExpressionStatement. got=%T", program.Statements[0])
-		}
-
-		exp, ok := stmt.Expression.(*ast.PostfixExpression)
-		if !ok {
-			t.Fatalf("stmt.Expression is not ast.PostfixExpression. got=%T", stmt.Expression)
-		}
-
-		if !testLiteralExpression(t, exp.Left, tt.value) {
-			return
-		}
-
-		if exp.Operator != tt.operator {
-			t.Fatalf("exp.Operator is not '%s'. got=%s", tt.operator, exp.Operator)
-		}
-	}
-}
-
 func TestParsingInfixExpressions(t *testing.T) {
 	infixTests := []struct {
 		input      string
@@ -393,6 +350,8 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 		{"(5 + 5) % 2", "((5 + 5) % 2)"},
 		{"add(6 % 5, 1, 3 * 4, add(7 % 3, 2 + 1, 4 / 2))", "add((6 % 5), 1, (3 * 4), add((7 % 3), (2 + 1), (4 / 2)))"},
 		{"3.25 + 4; -5.2 * 5", "(3.25 + 4)((-5.2) * 5)"},
+		{"1 + ++3", "(1 + (++3))"},
+		{"1 + ++(3 / 3 + 1)", "(1 + (++((3 / 3) + 1)))"},
 	}
 
 	for _, tt := range tests {

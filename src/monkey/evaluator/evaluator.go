@@ -128,6 +128,10 @@ func evalPrefixExpression(operator string, right object.Object) object.Object {
 		return evalBangOperatorExpression(right)
 	case "-":
 		return evalMinusPrefixOperatorExpression(right)
+	case "++":
+		return evalIncrementPrefixOperatorExpression(right)
+	case "--":
+		return evalDecrementPrefixOperatorExpression(right)
 	default:
 		return newError("unknown operator: %s%s", operator, right.Type())
 	}
@@ -156,6 +160,36 @@ func evalMinusPrefixOperatorExpression(right object.Object) object.Object {
 		return &object.Float{Value: -value}
 	default:
 		return newError("unknown operator: -%s", right.Type())
+	}
+}
+
+func evalIncrementPrefixOperatorExpression(right object.Object) object.Object {
+	switch right.Type() {
+	case object.INTEGER_OBJ:
+		rightObj := right.(*object.Integer)
+		rightObj.Value = rightObj.Value + 1
+		return rightObj
+	case object.FLOAT_OBJ:
+		rightObj := right.(*object.Float)
+		rightObj.Value = rightObj.Value + 1
+		return rightObj
+	default:
+		return newError("unknown operator: ++%s", right.Type())
+	}
+}
+
+func evalDecrementPrefixOperatorExpression(right object.Object) object.Object {
+	switch right.Type() {
+	case object.INTEGER_OBJ:
+		rightObj := right.(*object.Integer)
+		rightObj.Value = rightObj.Value - 1
+		return rightObj
+	case object.FLOAT_OBJ:
+		rightObj := right.(*object.Float)
+		rightObj.Value = rightObj.Value - 1
+		return rightObj
+	default:
+		return newError("unknown operator: --%s", right.Type())
 	}
 }
 
