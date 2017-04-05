@@ -27,11 +27,53 @@ func TestEvalIntegerExpression(t *testing.T) {
 		{"3 * 3 * 3 + 10", 37},
 		{"3 * (3 * 3) + 10", 37},
 		{"(5 + 10 * 2 + 15 / 3) * 2 + -10", 50},
+		{"3 % 2", 1},
+		{"10 % 4 * 2 + 6", 10},
+		{"++5", 6},
+		{"1 + ++(3 / 3 + 1)", 4},
+		{"let a = 1; let b = ++a; b;", 2},
+		{"--5", 4},
+		{"1 + --(3 / 3 + 1)", 2},
+		{"let a = 1; let b = --a; b;", 0},
 	}
 
 	for _, tt := range tests {
 		evaluated := testEval(tt.input)
 		testIntegerObject(t, evaluated, tt.expected)
+	}
+}
+
+func TestEvalFloatExpression(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected float64
+	}{
+		{"5.5", 5.5},
+		{"10.3", 10.3},
+		{"-5.5", -5.5},
+		{"-10.3", -10.3},
+		{"5 + 5.5 + 5 + 5.5 - 10.5", 10.5},
+		{"2 * 2.5 * 2 * 2.5 * 0.5", 12.5},
+		{"-5.5 + 0.3 + -5.5", -10.7},
+		{"5.2 * 2 + 10", 20.4},
+		{"5.5 + 2 * 10", 25.5},
+		{"20 + 2.5 * -10", -5.0},
+		{"50.0 / 4 * 2 + 10.5", 35.5},
+		{"2 * (5.3 + 10)", 30.6},
+		{"3 * 3 * 3 + 10.5", 37.5},
+		{"3 * (3.5 * 3) + 10", 41.5},
+		{"(5 + 10 * 2 + 15.0 / 2) * 2 + -10", 55.0},
+		{"3.5 % 2", 1.5},
+		{".5 * 0.5", .25},
+		{"++2.5", 3.5},
+		{"let a = 1.5; let b = ++a; b;", 2.5},
+		{"--2.5", 1.5},
+		{"let a = 1.5; let b = --a; b;", 0.5},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testFloatObject(t, evaluated, tt.expected)
 	}
 }
 
@@ -52,6 +94,12 @@ func TestEvalBooleanExpressions(t *testing.T) {
 		{"1 != 1", false},
 		{"1 == 2", false},
 		{"1 != 2", true},
+		{"1 > 2 && 2 == 2", false},
+		{"1 > 2 || 2 == 2", true},
+		{"1 <= 2", true},
+		{"1 >= 2", false},
+		{"1 <= 1", true},
+		{"1 >= 1", true},
 		{"true == true", true},
 		{"false == false", true},
 		{"true == false", false},
@@ -73,12 +121,20 @@ func TestEvalBooleanExpressions(t *testing.T) {
 		{"true || false", true},
 		{"false || true", true},
 		{"false || false", false},
-		{"1 > 2 && 2 == 2", false},
-		{"1 > 2 || 2 == 2", true},
-		{"1 <= 2", true},
-		{"1 >= 2", false},
-		{"1 <= 1", true},
-		{"1 >= 1", true},
+		{"1.5 < 2", true},
+		{"1.5 > 2", false},
+		{"1.5 < 1.5", false},
+		{"1.5 > 1.5", false},
+		{"1.5 == 1.5", true},
+		{"1.5 != 1.5", false},
+		{"1.5 == 2", false},
+		{"1.5 != 2", true},
+		{"1.5 > 2 && 2 == 2", false},
+		{"1.5 > 2 || 2 == 2", true},
+		{"1.5 <= 2", true},
+		{"1.5 >= 2", false},
+		{"1.5 <= 1.5", true},
+		{"1.5 >= 1.5", true},
 	}
 
 	for _, tt := range tests {
@@ -182,6 +238,10 @@ func TestErrorHandling(t *testing.T) {
 		{`true || "hello"`, "type mismatch: BOOLEAN || STRING"},
 		{`"hello" + false`, "type mismatch: STRING + BOOLEAN"},
 		{`"hello" - 3`, "unknown operator: STRING - INTEGER"},
+		{`++"hello"`, "unknown operator: ++STRING"},
+		{`--"hello"`, "unknown operator: --STRING"},
+		{`3.5 * "hello"`, "unknown operator: FLOAT * STRING"},
+		{`"hello" * 3.5`, "unknown operator: STRING * FLOAT"},
 	}
 
 	for _, tt := range tests {
@@ -289,6 +349,12 @@ func TestStringConcatenation(t *testing.T) {
 		{`"Hello" + " " + "World!"`, "Hello World!"},
 		{`"Hello" + 3`, "Hello3"},
 		{`3 + "Hello"`, "3Hello"},
+		{`"Hello" + 3.5`, "Hello3.5"},
+		{`3.5 + "Hello"`, "3.5Hello"},
+		{`(12 * .5) + "Hello"`, "6Hello"},
+		{`6.0 + "Hello"`, "6Hello"},
+		{`"Hello" * 3`, "HelloHelloHello"},
+		{`3 * "Hello"`, "HelloHelloHello"},
 	}
 
 	for _, tt := range tests {
@@ -300,7 +366,7 @@ func TestStringConcatenation(t *testing.T) {
 		}
 
 		if str.Value != tt.expected {
-			t.Fatalf("String has wrong value. expected=%q, got=%q", tt.expected, str.Value)
+			t.Errorf("String has wrong value. expected=%q, got=%q", tt.expected, str.Value)
 		}
 	}
 }
@@ -322,18 +388,27 @@ func TestBuiltinFunctions(t *testing.T) {
 		{"first([])", NULL},
 		{"first([1, 2])", 1},
 		{`let myArray = [1, 2, 4]; first(myArray);`, 1},
+		{`first(["one", "two"])`, "one"},
 		{"first([1, 2], [3, 4])", "wrong number of arguments. got=2, want=1"},
 		{"first(1)", "argument to 'first' must be ARRAY, got INTEGER"},
 		{"last([])", NULL},
 		{"last([1, 2])", 2},
 		{`let myArray = [1, 2, 4]; last(myArray);`, 4},
+		{`last(["one", "two"])`, "two"},
 		{"last([1, 2], [3, 4])", "wrong number of arguments. got=2, want=1"},
 		{"last(1)", "argument to 'last' must be ARRAY, got INTEGER"},
 		{"tail([])", NULL},
+		{"tail([1, 2, 3])", []int{2, 3}},
 		{"tail([1, 2], [3, 4])", "wrong number of arguments. got=2, want=1"},
 		{"tail(1)", "argument to 'tail' must be ARRAY, got INTEGER"},
+		{"push([], 1)", []int{1}},
+		{"push([1, 2], 3)", []int{1, 2, 3}},
 		{"push([1, 2])", "wrong number of arguments. got=1, want=2"},
 		{"push(1, 1)", "argument to 'push' must be ARRAY, got INTEGER"},
+		{"type(1)", "INTEGER"},
+		{"type(1 - 5)", "INTEGER"},
+		{"type([])", "ARRAY"},
+		{`type("hello")`, "STRING"},
 	}
 
 	for _, tt := range tests {
@@ -345,13 +420,15 @@ func TestBuiltinFunctions(t *testing.T) {
 		case string:
 			errObj, ok := evaluated.(*object.Error)
 			if !ok {
-				t.Errorf("object is not Error. got=%T (%+v)", evaluated, evaluated)
+				testStringObject(t, evaluated, string(expected))
 				continue
 			}
 
 			if errObj.Message != expected {
 				t.Errorf("wrong error message. expected=%q, got=%q", expected, errObj.Message)
 			}
+		case []int:
+			testArrayObject(t, evaluated, expected)
 		}
 	}
 }
@@ -493,6 +570,21 @@ func testIntegerObject(t *testing.T, obj object.Object, expected int64) bool {
 	return true
 }
 
+func testFloatObject(t *testing.T, obj object.Object, expected float64) bool {
+	result, ok := obj.(*object.Float)
+	if !ok {
+		t.Errorf("object is not Float. got=%T (%+v)", obj, obj)
+		return false
+	}
+
+	if result.Value != expected {
+		t.Errorf("object has wrong value. got=%f, want=%f", result.Value, expected)
+		return false
+	}
+
+	return true
+}
+
 func testBooleanObject(t *testing.T, obj object.Object, expected bool) bool {
 	result, ok := obj.(*object.Boolean)
 	if !ok {
@@ -526,6 +618,29 @@ func testStringObject(t *testing.T, obj object.Object, expected string) bool {
 	if result.Value != expected {
 		t.Errorf("object has wrong value. got=%q, want=%q", result.Value, expected)
 		return false
+	}
+
+	return true
+}
+
+func testArrayObject(t *testing.T, obj object.Object, expected []int) bool {
+	result, ok := obj.(*object.Array)
+	if !ok {
+		t.Errorf("object. is not Array. got=%T, (%+v)", obj, obj)
+		return false
+	}
+
+	for index, val := range result.Elements {
+		integer, ok := val.(*object.Integer)
+		if !ok {
+			t.Errorf("array value not Integer. got=%T (%+v)", val, val)
+			return false
+		}
+
+		if integer.Value != int64(expected[index]) {
+			t.Errorf("array has wrong value at index. got=%d, want=%d", integer.Value, int64(expected[index]))
+			return false
+		}
 	}
 
 	return true

@@ -9,6 +9,8 @@ type Integer struct {
 	Value int64
 }
 
+func (i *Integer) number() {}
+
 // Type : Returns Object's type
 func (i *Integer) Type() ObjectType {
 	return INTEGER_OBJ

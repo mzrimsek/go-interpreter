@@ -12,6 +12,7 @@ const (
 	// Literals
 	IDENT  = "IDENT"
 	INT    = "INT"
+	FLOAT  = "FLOAT"
 	STRING = "STRING"
 
 	// Operators
@@ -21,6 +22,7 @@ const (
 	BANG     = "!"
 	ASTERISK = "*"
 	SLASH    = "/"
+	PERCENT  = "%"
 
 	LT  = "<"
 	GT  = ">"
@@ -32,6 +34,9 @@ const (
 
 	AND = "&&"
 	OR  = "||"
+
+	INCREMENT = "++"
+	DECREMENT = "--"
 
 	// Delimiters
 	COMMA     = ","

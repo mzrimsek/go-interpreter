@@ -5,7 +5,7 @@ import (
 	"monkey/token"
 )
 
-// PrefixExpression : Expression node representing prefix expressions like negative numbers and negation
+// PrefixExpression : Expression node representing prefix expressions like negative numbers, negation, and prefix incrementing/decrementing
 type PrefixExpression struct {
 	Token    token.Token
 	Operator string

@@ -7,6 +7,7 @@ type ObjectType string
 // ObjectTypes
 const (
 	INTEGER_OBJ      = "INTEGER"
+	FLOAT_OBJ        = "FLOAT"
 	BOOLEAN_OBJ      = "BOOLEAN"
 	NULL_OBJ         = "NULL"
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
@@ -22,6 +23,11 @@ const (
 type Object interface {
 	Type() ObjectType
 	Inspect() string
+}
+
+// Number : Generic number type
+type Number interface {
+	number()
 }
 
 // Hashable : Defines Objects that are usable as keys in a Hash
