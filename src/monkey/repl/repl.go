@@ -1,4 +1,4 @@
-// Package repl : The "READ-EVAL-PRINT-LOOP" interactive language shell to work with Monkey code from the terminal
+// Package repl : The interactive language shell to work with Monkey code
 package repl
 
 import (
