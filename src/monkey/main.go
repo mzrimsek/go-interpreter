@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"monkey/reader"
 	"monkey/repl"
 	"os"
 	"os/user"
+	"strings"
 )
 
 func main() {
@@ -13,7 +15,9 @@ func main() {
 		checkError(err)
 		defer file.Close()
 
-		repl.Start(file, os.Stdout)
+		if strings.Contains(file.Name(), ".monkey") {
+			reader.Start(file, os.Stdout)
+		}
 	} else {
 		user, err := user.Current()
 		checkError(err)
