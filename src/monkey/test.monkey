@@ -45,6 +45,6 @@ while(num <= 100) {
     if(!fizz(num) && !buzz(num)) {
         put(num);
     }
-    putln("");
+    putln();
     ++num;
 }
