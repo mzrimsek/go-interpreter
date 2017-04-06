@@ -58,6 +58,7 @@ const (
 	IF       = "IF"
 	ELSE     = "ELSE"
 	RETURN   = "RETURN"
+	WHILE    = "WHILE"
 )
 
 // Token : Defines the type and literal representation for the tokens to be used in program analysis
@@ -74,6 +75,7 @@ var keywords = map[string]TokenType{
 	"if":     IF,
 	"else":   ELSE,
 	"return": RETURN,
+	"while":  WHILE,
 }
 
 // LookupIdent : Compares identifier input against list of keywords to return proper TokenType

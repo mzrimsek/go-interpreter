@@ -32,7 +32,10 @@ func TestNextToken(t *testing.T) {
 			  let half = .5;
 			  let pi = 3.14159;
 			  ++x;
-			  --x;`
+			  --x;
+			  while(x < 1) {
+				++x;	  
+			  }`
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -158,6 +161,17 @@ func TestNextToken(t *testing.T) {
 		{token.DECREMENT, "--"},
 		{token.IDENT, "x"},
 		{token.SEMICOLON, ";"},
+		{token.WHILE, "while"},
+		{token.LPAREN, "("},
+		{token.IDENT, "x"},
+		{token.LT, "<"},
+		{token.INT, "1"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.INCREMENT, "++"},
+		{token.IDENT, "x"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
 		{token.EOF, ""},
 	}
 
