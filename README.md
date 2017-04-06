@@ -32,7 +32,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 ### Todo
 * Extend test coverage for builtins
 * Extend tests to check for more types
-* Read input from a file
+* ~~Read input from a file~~
 * Add more builtin functions
 
 ## Setup
