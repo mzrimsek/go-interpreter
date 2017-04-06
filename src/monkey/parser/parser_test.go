@@ -756,6 +756,47 @@ func TestParsingHashLiteralsWithExpressions(t *testing.T) {
 	}
 }
 
+func TestWhileExpression(t *testing.T) {
+	input := `while(x < 1) { ++x; }`
+
+	l := lexer.New(input)
+	p := New(l)
+
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	if len(program.Statements) != 1 {
+		t.Fatalf("program.Statements does not contain %d statements. got=%d\n", 1, len(program.Statements))
+	}
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
+	}
+
+	exp, ok := stmt.Expression.(*ast.WhileExpression)
+	if !ok {
+		t.Fatalf("stmt.Expression is not ast.WhileExpression. got=%T", stmt.Expression)
+	}
+
+	if !testInfixExpression(t, exp.Condition, "x", "<", 1) {
+		return
+	}
+
+	if len(exp.Block.Statements) != 1 {
+		t.Errorf("consequence is not 1 statements. got=%d", len(exp.Block.Statements))
+	}
+
+	block, ok := exp.Block.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("exp.Block.Statements[0] is not ast.ExpressionStatement. got=%T", exp.Block.Statements[0])
+	}
+
+	if !testPrefixExpression(t, block.Expression, "++", "x") {
+		return
+	}
+}
+
 func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
 	if s.TokenLiteral() != "let" {
 		t.Errorf("s.TokenLiteral not 'let'. got=%q", s.TokenLiteral())
