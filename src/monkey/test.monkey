@@ -25,3 +25,6 @@ let addNums = fn(x, y) {
 }
 
 puts(addNums(1, 3 % 2)); 
+
+2 + 2;
+return 3 + 2;
