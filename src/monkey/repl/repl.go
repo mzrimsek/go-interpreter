@@ -32,6 +32,8 @@ const MONKEY_FACE = `
 
 // Start : Starts an interactive shell session for a user to input Monkey code into
 func Start(in io.Reader, out io.Writer) {
+	evaluator.ShouldPrint = true
+
 	scanner := bufio.NewScanner(in)
 	env := object.NewEnvironment()
 

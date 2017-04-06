@@ -1,9 +1,9 @@
 let reduce = fn (arr, initial, f) { 
     let iter = fn (arr, result) { 
-        if (len(arr) == 0 ) { 
-            result 
+        if (len(arr) == 0) { 
+            result
         } else { 
-            iter(tail(arr) , f(result , first (arr))); 
+            iter(tail(arr) , f(result , first (arr)))
         } 
     }; 
     iter(arr, initial); 
@@ -16,8 +16,12 @@ let sum = fn(arr) {
 };
 
 let array = [1, 2, 3, 4, 5];
-sum(array);
-puts(array);
-puts(array);
+let sum = sum(array);
+puts("Sum: " + sum);
+puts(push(array, 6));
 
-1+2;
+let addNums = fn(x, y) {
+    return x + y;
+}
+
+puts(addNums(1, 3 % 2)); 

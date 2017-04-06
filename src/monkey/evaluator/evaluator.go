@@ -8,6 +8,9 @@ import (
 	"strings"
 )
 
+// ShouldPrint : Flag to allow printing of evaluated statements. Setting to false makes the 'puts' builtin the only way to show output.
+var ShouldPrint bool
+
 // Single reference Objects
 var (
 	NULL  = &object.Null{}
@@ -114,13 +117,13 @@ func evalProgram(program *ast.Program, env *object.Environment) object.Object {
 
 		switch result := result.(type) {
 		case *object.ReturnValue:
-			return result.Value
+			return getResult(result.Value)
 		case *object.Error:
 			return result
 		}
 	}
 
-	return result
+	return getResult(result)
 }
 
 func evalPrefixExpression(operator string, right object.Object) object.Object {

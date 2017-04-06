@@ -33,3 +33,10 @@ func isError(obj object.Object) bool {
 	}
 	return false
 }
+
+func getResult(result object.Object) object.Object {
+	if ShouldPrint {
+		return result
+	}
+	return NULL
+}

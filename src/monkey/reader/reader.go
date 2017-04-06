@@ -12,6 +12,8 @@ import (
 
 // Start : Reads and evaluates the inputted file
 func Start(in io.Reader, out io.Writer) {
+	evaluator.ShouldPrint = false
+
 	scanner := bufio.NewScanner(in)
 
 	var programInput string
