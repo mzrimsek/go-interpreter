@@ -26,7 +26,7 @@ let addNums = fn(x, y) {
 
 let a = 3;
 if(true) {
-    let a = 2;
+    let a = a + 2;
     puts(a);
 }
 puts(a);
