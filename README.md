@@ -22,7 +22,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Single and multi-line comments
 * Else-If statements
 * Switch statements
-* While loops
+* ~~While loops~~
 * For loops
 * Do-While loops
 * Break and continue statements
