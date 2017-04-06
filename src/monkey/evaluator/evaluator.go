@@ -500,7 +500,11 @@ func evalWhileExpression(we *ast.WhileExpression, env *object.Environment) objec
 	var result object.Object
 	for isTruthy(condition) {
 		result = Eval(we.Block, env)
+
 		condition = Eval(we.Condition, env)
+		if isError(condition) {
+			return condition
+		}
 	}
 	return result
 }
