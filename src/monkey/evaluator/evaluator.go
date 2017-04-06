@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// ShouldPrint : Flag to allow printing of evaluated statements. Setting to false makes the 'puts' builtin the only way to show output.
+// ShouldPrint : Flag to allow printing of evaluated statements. Setting to false makes the 'puts' builtin the only way to print output.
 var ShouldPrint bool
 
 // Single reference Objects
