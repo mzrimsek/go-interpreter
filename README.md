@@ -27,6 +27,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Do-While loops
 * Break and continue statements
 * Dynamic list structure
+* List comprehensions
 * Emojis
 
 ### Todo
