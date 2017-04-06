@@ -17,8 +17,8 @@ let sum = fn(arr) {
 
 let array = [1, 2, 3, 4, 5];
 let sum = sum(array);
-puts("Sum: " + sum);
-puts(push(array, 6));
+putln("Sum: " + sum);
+putln(push(array, 6));
 
 let addNums = fn(x, y) {
     return x + y;
@@ -27,6 +27,24 @@ let addNums = fn(x, y) {
 let a = 3;
 if(true) {
     let a = a + 2;
-    puts(a);
+    putln(a);
 }
-puts(a);
+putln(a);
+putln();
+
+let fizz = fn(num) { num % 3 == 0 };
+let buzz = fn(num) { num % 5 == 0 };
+let num = 1;
+while(num <= 100) {
+    if(fizz(num)) {
+        put("fizz");
+    }
+    if (buzz(num)) {
+        put("buzz");
+    }
+    if(!fizz(num) && !buzz(num)) {
+        put(num);
+    }
+    putln("");
+    ++num;
+}
