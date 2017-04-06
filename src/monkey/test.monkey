@@ -5,7 +5,7 @@ let reduce = fn (arr, initial, f) {
         } else { 
             iter(tail(arr) , f(result , first (arr)))
         } 
-    }; 
+    };
     iter(arr, initial); 
 };
 
@@ -22,8 +22,11 @@ puts(push(array, 6));
 
 let addNums = fn(x, y) {
     return x + y;
+} 
+
+let a = 3;
+if(true) {
+    let a = 2;
+    puts(a);
 }
-
-puts(addNums(1, 3 % 2)); 
-
-2 + 2;
+puts(a);
