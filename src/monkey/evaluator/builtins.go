@@ -99,8 +99,20 @@ var builtins = map[string]*object.Builtin{
 			return &object.Array{Elements: newElements}
 		},
 	},
-	"puts": &object.Builtin{
+	"put": &object.Builtin{
 		Fn: func(args ...object.Object) object.Object {
+			for _, arg := range args {
+				fmt.Print(arg.Inspect())
+			}
+
+			return NULL
+		},
+	},
+	"putln": &object.Builtin{
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) == 0 {
+				fmt.Println()
+			}
 			for _, arg := range args {
 				fmt.Println(arg.Inspect())
 			}
