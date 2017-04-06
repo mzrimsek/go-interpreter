@@ -490,3 +490,17 @@ func evalHashIndexExpression(hash, index object.Object) object.Object {
 
 	return pair.Value
 }
+
+func evalWhileExpression(we *ast.WhileExpression, env *object.Environment) object.Object {
+	condition := Eval(we.Condition, env)
+	if isError(condition) {
+		return condition
+	}
+
+	var result object.Object
+	for isTruthy(condition) {
+		result = Eval(we.Block, env)
+		condition = Eval(we.Condition, env)
+	}
+	return result
+}

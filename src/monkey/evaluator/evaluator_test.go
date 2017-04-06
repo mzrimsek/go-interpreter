@@ -551,12 +551,10 @@ func TestWhileExpressions(t *testing.T) {
 		expected interface{}
 	}{
 		{`let x = 0;
-		  let z = 5;
 		  while(x < 2){
 			++x;
-			++z;
 		  }
-		  z;`, 7},
+		  x;`, 2},
 	}
 
 	for _, tt := range tests {
