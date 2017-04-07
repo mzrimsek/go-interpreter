@@ -1,5 +1,5 @@
-let reduce = fn (arr, initial, f) { 
-    let iter = fn (arr, result) { 
+let reduce = fn(arr, initial, f) { 
+    let iter = fn(arr, result) { 
         if (len(arr) == 0) { 
             result
         } else { 
