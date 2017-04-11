@@ -6,7 +6,6 @@ import (
 	"monkey/repl"
 	"os"
 	"os/user"
-	"strings"
 )
 
 func main() {
@@ -15,9 +14,7 @@ func main() {
 		checkError(err)
 		defer file.Close()
 
-		if strings.Contains(file.Name(), ".monkey") {
-			reader.Start(file, os.Stdout)
-		}
+		reader.Start(file, os.Stdout)
 	} else {
 		user, err := user.Current()
 		checkError(err)
