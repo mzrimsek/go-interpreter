@@ -48,3 +48,6 @@ while(num <= 100) {
     putln();
     ++num;
 }
+
+let a = "hello";
+putln(substr(a, 0, 3) * 3);

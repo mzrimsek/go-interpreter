@@ -409,6 +409,12 @@ func TestBuiltinFunctions(t *testing.T) {
 		{"type(1 - 5)", "INTEGER"},
 		{"type([])", "ARRAY"},
 		{`type("hello")`, "STRING"},
+		{`substr("hello", 0, 2)`, "he"},
+		{`substr("hello", 0, 5)`, "hello"},
+		{"substr(1, 0, 2)", "first argument to 'substr' must be STRING, got INTEGER"},
+		{`substr("hello", 1)`, "wrong number of arguments. got=2, want=3"},
+		{`substr("hello", 1, 6)`, "substring indices must be within string length"},
+		{`substr("hello", -1, 5)`, "substring indices must be within string length"},
 	}
 
 	for _, tt := range tests {
