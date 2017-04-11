@@ -129,4 +129,33 @@ var builtins = map[string]*object.Builtin{
 			return &object.String{Value: string(args[0].Type())}
 		},
 	},
+	"substr": &object.Builtin{
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 3 {
+				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+
+			if args[0].Type() != object.STRING_OBJ {
+				return newError("first argument to 'substr' must be STRING, got %s", args[0].Type())
+			}
+
+			if args[1].Type() != object.INTEGER_OBJ && args[2].Type() != object.INTEGER_OBJ {
+				return newError("last arguments to 'substr' must be INT, got %s and %s", args[1].Type(), args[2].Type())
+			}
+
+			str := args[0].(*object.String)
+			start := args[1].(*object.Integer)
+			end := args[2].(*object.Integer)
+
+			if start.Value > end.Value {
+				return newError("start index cannot be larger than end index")
+			}
+
+			if start.Value > int64(len(str.Value)) || end.Value > int64(len(str.Value)) {
+				return newError("substring indices must be at most the string length")
+			}
+
+			return &object.String{Value: str.Value[start.Value:end.Value]}
+		},
+	},
 }
