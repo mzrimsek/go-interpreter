@@ -267,6 +267,12 @@ func evalNumberInfixExpression(operator string, left, right object.Object) objec
 			return &object.Integer{Value: int64(leftVal) % int64(rightVal)}
 		}
 		return &object.Float{Value: math.Mod(leftVal, rightVal)}
+	case "**":
+		val := math.Pow(leftVal, rightVal)
+		if isInt {
+			return &object.Integer{Value: int64(val)}
+		}
+		return &object.Float{Value: val}
 	case "<":
 		return nativeBoolToBooleanObject(leftVal < rightVal)
 	case ">":

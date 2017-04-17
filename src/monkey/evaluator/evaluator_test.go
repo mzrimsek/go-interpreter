@@ -35,6 +35,8 @@ func TestEvalIntegerExpression(t *testing.T) {
 		{"--5", 4},
 		{"1 + --(3 / 3 + 1)", 2},
 		{"let a = 1; let b = --a; b;", 0},
+		{"2 ** 2", 4},
+		{"2 ** 5", 32},
 	}
 
 	for _, tt := range tests {
@@ -69,6 +71,7 @@ func TestEvalFloatExpression(t *testing.T) {
 		{"let a = 1.5; let b = ++a; b;", 2.5},
 		{"--2.5", 1.5},
 		{"let a = 1.5; let b = --a; b;", 0.5},
+		{"4 ** 0.5", 2},
 	}
 
 	for _, tt := range tests {
@@ -242,6 +245,7 @@ func TestErrorHandling(t *testing.T) {
 		{`--"hello"`, "unknown operator: --STRING"},
 		{`3.5 * "hello"`, "unknown operator: FLOAT * STRING"},
 		{`"hello" * 3.5`, "unknown operator: STRING * FLOAT"},
+		{`"hello" ** 4`, "unknown operator: STRING ** INTEGER"},
 	}
 
 	for _, tt := range tests {
