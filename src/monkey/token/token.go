@@ -23,6 +23,7 @@ const (
 	ASTERISK = "*"
 	SLASH    = "/"
 	PERCENT  = "%"
+	POWER    = "**"
 
 	LT  = "<"
 	GT  = ">"
