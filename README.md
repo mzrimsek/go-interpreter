@@ -9,7 +9,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * ~~Prefix Increment and Decrement operators~~
 * Postfix Increment and Decrement operators
 * ~~Remainder operator~~
-* Ruby-like power operator
+* ~~Ruby-like power operator~~
 * ~~AND and OR operators~~
 * ~~Less Than or Equal and Greater Than or Equal operators~~
 * Escape characters
