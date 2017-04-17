@@ -16,6 +16,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * ~~String comparison~~
 * ~~Python-like String multiplication operator~~
 * ~~Concatenate basic data types to strings~~
+* String interpolation
 * String index expressions
 * Append to hash structure
 * Set array value at index
