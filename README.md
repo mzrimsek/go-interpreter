@@ -38,6 +38,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Extend tests to check for more types
 * ~~Read input from a file~~
 * Add more builtin functions
+* Add a wiki with language documentation
 
 ## Setup
 1. Install Go ```sudo apt-get install golang-go```
