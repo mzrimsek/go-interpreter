@@ -182,11 +182,11 @@ func evalIncrementPrefixOperatorExpression(right object.Object) object.Object {
 	case object.INTEGER_OBJ:
 		rightObj := right.(*object.Integer)
 		rightObj.Value = rightObj.Value + 1
-		return rightObj
+		return &object.Integer{Value: rightObj.Value}
 	case object.FLOAT_OBJ:
 		rightObj := right.(*object.Float)
 		rightObj.Value = rightObj.Value + 1
-		return rightObj
+		return &object.Float{Value: rightObj.Value}
 	default:
 		return newError("unknown operator: ++%s", right.Type())
 	}
@@ -197,11 +197,11 @@ func evalDecrementPrefixOperatorExpression(right object.Object) object.Object {
 	case object.INTEGER_OBJ:
 		rightObj := right.(*object.Integer)
 		rightObj.Value = rightObj.Value - 1
-		return rightObj
+		return &object.Integer{Value: rightObj.Value}
 	case object.FLOAT_OBJ:
 		rightObj := right.(*object.Float)
 		rightObj.Value = rightObj.Value - 1
-		return rightObj
+		return &object.Float{Value: rightObj.Value}
 	default:
 		return newError("unknown operator: --%s", right.Type())
 	}
@@ -537,14 +537,14 @@ func evalIncrementPostfixOperatorExpression(left object.Object) object.Object {
 	switch left.Type() {
 	case object.INTEGER_OBJ:
 		leftObj := left.(*object.Integer)
-		tempLeft := &object.Integer{Value: leftObj.Value}
+		returnVal := &object.Integer{Value: leftObj.Value}
 		leftObj.Value = leftObj.Value + 1
-		return tempLeft
+		return returnVal
 	case object.FLOAT_OBJ:
 		leftObj := left.(*object.Float)
-		tempLeft := &object.Float{Value: leftObj.Value}
+		returnVal := &object.Float{Value: leftObj.Value}
 		leftObj.Value = leftObj.Value + 1
-		return tempLeft
+		return returnVal
 	default:
 		return newError("unknown operator: %s++", left.Type())
 	}
@@ -554,14 +554,14 @@ func evalDecrementPostfixOperatorExpression(left object.Object) object.Object {
 	switch left.Type() {
 	case object.INTEGER_OBJ:
 		leftObj := left.(*object.Integer)
-		tempLeft := &object.Integer{Value: leftObj.Value}
+		returnVal := &object.Integer{Value: leftObj.Value}
 		leftObj.Value = leftObj.Value - 1
-		return tempLeft
+		return returnVal
 	case object.FLOAT_OBJ:
 		leftObj := left.(*object.Float)
-		tempLeft := &object.Float{Value: leftObj.Value}
+		returnVal := &object.Float{Value: leftObj.Value}
 		leftObj.Value = leftObj.Value - 1
-		return tempLeft
+		return returnVal
 	default:
 		return newError("unknown operator: %s--", left.Type())
 	}
