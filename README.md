@@ -33,7 +33,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Variable assignment
 * Assignment shortcut operators
 * ~~Prefix Increment and Decrement operators~~
-* Postfix Increment and Decrement operators
+* ~~Postfix Increment and Decrement operators~~
 * ~~Remainder operator~~
 * ~~Power operator~~
 * ~~AND and OR operators~~
