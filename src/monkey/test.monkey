@@ -56,3 +56,9 @@ let num = 2;
 putln("Should print 3: " + ++num)
 putln("Should print 3: " + num++)
 putln("Should print 4: " + num)
+
+let test_arr = [1, 2, 3, 4, 5];
+let index = 0;
+while(index < len(test_arr)) {
+    putln(test_arr[index++]);
+}
