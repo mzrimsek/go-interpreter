@@ -34,13 +34,13 @@ var precedences = map[token.TokenType]int{
 	token.GTE:       COMPARISON,
 	token.PLUS:      SUM,
 	token.MINUS:     SUM,
-	token.INCREMENT: SUM,
-	token.DECREMENT: SUM,
 	token.SLASH:     PRODUCT,
 	token.ASTERISK:  PRODUCT,
 	token.PERCENT:   PRODUCT,
 	token.POWER:     PRODUCT,
 	token.LPAREN:    CALL,
+	token.INCREMENT: INDEX,
+	token.DECREMENT: INDEX,
 	token.LBRACKET:  INDEX,
 }
 

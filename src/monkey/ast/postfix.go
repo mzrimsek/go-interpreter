@@ -24,7 +24,7 @@ func (pe *PostfixExpression) String() string {
 
 	out.WriteString("(")
 	out.WriteString(pe.Left.String())
-	out.WriteString(" " + pe.Operator + " ")
+	out.WriteString(pe.Operator)
 	out.WriteString(")")
 
 	return out.String()
