@@ -24,22 +24,24 @@ const (
 )
 
 var precedences = map[token.TokenType]int{
-	token.AND:      ANDOR,
-	token.OR:       ANDOR,
-	token.EQ:       EQUALS,
-	token.NOT_EQ:   EQUALS,
-	token.LT:       COMPARISON,
-	token.GT:       COMPARISON,
-	token.LTE:      COMPARISON,
-	token.GTE:      COMPARISON,
-	token.PLUS:     SUM,
-	token.MINUS:    SUM,
-	token.SLASH:    PRODUCT,
-	token.ASTERISK: PRODUCT,
-	token.PERCENT:  PRODUCT,
-	token.POWER:    PRODUCT,
-	token.LPAREN:   CALL,
-	token.LBRACKET: INDEX,
+	token.AND:       ANDOR,
+	token.OR:        ANDOR,
+	token.EQ:        EQUALS,
+	token.NOT_EQ:    EQUALS,
+	token.LT:        COMPARISON,
+	token.GT:        COMPARISON,
+	token.LTE:       COMPARISON,
+	token.GTE:       COMPARISON,
+	token.PLUS:      SUM,
+	token.MINUS:     SUM,
+	token.INCREMENT: SUM,
+	token.DECREMENT: SUM,
+	token.SLASH:     PRODUCT,
+	token.ASTERISK:  PRODUCT,
+	token.PERCENT:   PRODUCT,
+	token.POWER:     PRODUCT,
+	token.LPAREN:    CALL,
+	token.LBRACKET:  INDEX,
 }
 
 type (
@@ -101,6 +103,8 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.GTE, p.parseInfixExpression)
 	p.registerInfix(token.PERCENT, p.parseInfixExpression)
 	p.registerInfix(token.POWER, p.parseInfixExpression)
+	p.registerInfix(token.INCREMENT, p.parsePostfixExpression)
+	p.registerInfix(token.DECREMENT, p.parsePostfixExpression)
 
 	p.nextToken()
 	p.nextToken()
@@ -545,4 +549,8 @@ func (p *Parser) parseWhileExpression() ast.Expression {
 	expression.Block = p.parseBlockStatement()
 
 	return expression
+}
+
+func (p *Parser) parsePostfixExpression(left ast.Expression) ast.Expression {
+	return &ast.PostfixExpression{Token: p.curToken, Left: left, Operator: p.curToken.Literal}
 }

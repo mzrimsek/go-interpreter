@@ -800,6 +800,52 @@ func TestWhileExpression(t *testing.T) {
 	}
 }
 
+func TestParsingPostfixExpression(t *testing.T) {
+	tests := []struct {
+		input    string
+		operator string
+		expected interface{}
+	}{
+		{"1++", "++", 1},
+		{"2--", "--", 2},
+		{"foo++", "++", "foo"},
+		{"bar--", "--", "bar"},
+	}
+
+	for _, tt := range tests {
+		l := lexer.New(tt.input)
+		p := New(l)
+
+		program := p.ParseProgram()
+		checkParserErrors(t, p)
+
+		if len(program.Statements) != 1 {
+			t.Fatalf("expect %d statements. got=%d", 1, len(program.Statements))
+		}
+
+		stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+		if !ok {
+			t.Fatalf("statement is not ast.Expression. got=%T", program.Statements[0])
+		}
+
+		exp, ok := stmt.Expression.(*ast.PostfixExpression)
+		if !ok {
+			t.Fatalf("expression is not a ast.PostfixExpression. got=%T", stmt.Expression)
+		}
+
+		if exp.Operator != tt.operator {
+			t.Fatalf("expression's operator is not %s. got=%s", tt.operator, exp.Operator)
+		}
+
+		switch val := tt.expected.(type) {
+		case int:
+			testIntegerLiteral(t, exp.Left, int64(val))
+		case string:
+			testIdentifier(t, exp.Left, val)
+		}
+	}
+}
+
 func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
 	if s.TokenLiteral() != "let" {
 		t.Errorf("s.TokenLiteral not 'let'. got=%q", s.TokenLiteral())
