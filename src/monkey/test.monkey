@@ -46,8 +46,13 @@ while(num <= 100) {
         put(num);
     }
     putln();
-    ++num;
+    num++;
 }
 
 let a = "hello";
 putln(substr(a, 0, 3) * 3);
+
+let num = 2;
+putln("Should print 3: " + ++num)
+putln("Should print 3: " + num++)
+putln("Should print 4: " + num)
