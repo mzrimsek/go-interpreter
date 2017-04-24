@@ -107,6 +107,13 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		return evalIndexExpression(left, index)
 	case *ast.WhileExpression:
 		return evalWhileExpression(node, env)
+	case *ast.PostfixExpression:
+		left := Eval(node.Left, env)
+		if isError(left) {
+			return left
+		}
+
+		return evalPostfixExpression(left, node.Operator)
 	}
 
 	return nil
@@ -513,4 +520,49 @@ func evalWhileExpression(we *ast.WhileExpression, env *object.Environment) objec
 		}
 	}
 	return result
+}
+
+func evalPostfixExpression(left object.Object, operator string) object.Object {
+	switch operator {
+	case "++":
+		return evalIncrementPostfixOperatorExpression(left)
+	case "--":
+		return evalDecrementPostfixOperatorExpression(left)
+	default:
+		return newError("unknown operator: %s%s", left.Type(), operator)
+	}
+}
+
+func evalIncrementPostfixOperatorExpression(left object.Object) object.Object {
+	switch left.Type() {
+	case object.INTEGER_OBJ:
+		leftObj := left.(*object.Integer)
+		tempLeft := &object.Integer{Value: leftObj.Value}
+		leftObj.Value = leftObj.Value + 1
+		return tempLeft
+	case object.FLOAT_OBJ:
+		leftObj := left.(*object.Float)
+		tempLeft := &object.Float{Value: leftObj.Value}
+		leftObj.Value = leftObj.Value + 1
+		return tempLeft
+	default:
+		return newError("unknown operator: %s++", left.Type())
+	}
+}
+
+func evalDecrementPostfixOperatorExpression(left object.Object) object.Object {
+	switch left.Type() {
+	case object.INTEGER_OBJ:
+		leftObj := left.(*object.Integer)
+		tempLeft := &object.Integer{Value: leftObj.Value}
+		leftObj.Value = leftObj.Value - 1
+		return tempLeft
+	case object.FLOAT_OBJ:
+		leftObj := left.(*object.Float)
+		tempLeft := &object.Float{Value: leftObj.Value}
+		leftObj.Value = leftObj.Value - 1
+		return tempLeft
+	default:
+		return newError("unknown operator: %s--", left.Type())
+	}
 }
