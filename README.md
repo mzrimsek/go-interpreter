@@ -6,15 +6,8 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
   * Integer
   * Float
   * String
-    * Len
-    * Substr
   * Boolean
   * Array
-    * Len
-    * First
-    * Last
-    * Tail
-    * Push
   * Hash
 * Flow Control
   * If-Else
