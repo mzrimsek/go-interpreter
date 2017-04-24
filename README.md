@@ -1,6 +1,32 @@
 # go-interpreter
 An interpreter written in Go as described in [Writing An Interpreter In Go](https://interpreterbook.com/). The book is great and I highly recommend it.
 
+## Supported Features
+* Builtin Data Types
+  * Integer
+  * Float
+  * String
+    * Len
+    * Substr
+  * Boolean
+  * Array
+    * Len
+    * First
+    * Last
+    * Tail
+    * Push
+  * Hash
+* Flow Control
+  * If-Else
+  * While
+* Variables (Scoped to their block)
+* First-class Functions
+  * With/without Arguments
+  * Closures
+* IO
+  * Put
+  * Putln
+
 ## Planned Feature Additions
 * ~~Float literals~~
 * Character literals
