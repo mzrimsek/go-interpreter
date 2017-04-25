@@ -590,6 +590,26 @@ func TestWhileExpressions(t *testing.T) {
 	}
 }
 
+func TestPostIncrementDecrementAndPreIncrementDecrement(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected interface{}
+	}{
+		{"let i = 10; let j = ++i; let k = i++; i == 12 && j == 11 && k == 11", true},
+		{"let i = 10; let j = --i; let k = i--; i == 8 && j == 9 && k == 9", true},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		bool, ok := tt.expected.(bool)
+		if ok {
+			testBooleanObject(t, evaluated, bool)
+		} else {
+			testNullObject(t, evaluated)
+		}
+	}
+}
+
 func testEval(input string) object.Object {
 	ShouldPrint = true
 
