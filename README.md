@@ -45,11 +45,19 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Else-If statements
 * Switch statements
 * ~~While loops~~
+* Until loop
 * For loops
+* Foreach loops
 * Do-While loops
 * Break and continue statements
-* Dynamic list structure
 * List comprehensions
+* Classes and methods
+* Constructors
+* Class instance variables
+* Self class reference
+* Inheritance
+* Package import
+* Global constant variables
 * Emojis
 
 ### Todo
@@ -57,6 +65,8 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Extend tests to check for more types
 * ~~Read input from a file~~
 * Add more builtin functions
+  * Array and String includes function
+  * Array all, any, etc type operators
 * Add a wiki with language documentation
 
 ## Setup
