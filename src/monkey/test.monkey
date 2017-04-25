@@ -69,3 +69,7 @@ test = 2.5;
 putln("Should print 2.5: " + test);
 test = "Hello";
 putln("Should print Hello: " + test);
+let test = fn() { putln("Hello!"); };
+test();
+test = fn(x, y) { x + y };
+putln(test(1, 2));
