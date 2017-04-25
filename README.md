@@ -51,6 +51,8 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Do-While loops
 * Break and continue statements
 * List comprehensions
+
+## Tenative Planned Features
 * Classes and methods
 * Constructors
 * Class instance variables
