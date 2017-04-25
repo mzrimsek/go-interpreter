@@ -55,6 +55,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Class instance variables
 * Self class reference
 * Inheritance
+* Package import
 * Global constant variables
 * Emojis
 
@@ -63,7 +64,8 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * Extend tests to check for more types
 * ~~Read input from a file~~
 * Add more builtin functions
-  * Array and String iterators
+  * Array and String iterators
+  * Array includes, all, any, etc type operators
 * Add a wiki with language documentation
 
 ## Setup
