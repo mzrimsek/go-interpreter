@@ -39,6 +39,8 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 			return val
 		}
 		env.Set(node.Name.Value, val)
+	case *ast.AssignStatement:
+		return evalAssignStatement(node, env)
 	// Expressions
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
@@ -218,4 +220,17 @@ func evalHashLiteral(node *ast.HashLiteral, env *object.Environment) object.Obje
 	}
 
 	return &object.Hash{Pairs: pairs}
+}
+
+func evalAssignStatement(node *ast.AssignStatement, env *object.Environment) object.Object {
+	_, ok := env.Get(node.Name.Value)
+	if !ok {
+		return newError("identifier not found: " + node.Name.Value)
+	}
+
+	newValue := Eval(node.Value, env)
+	if isError(newValue) {
+		return newValue
+	}
+	return env.Set(node.Name.Value, newValue)
 }

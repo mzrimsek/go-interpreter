@@ -470,6 +470,20 @@ func TestHashLiterals(t *testing.T) {
 	}
 }
 
+func TestAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue int64
+	}{
+		{"let a = 5; a = 6; a;", 6},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
 func testEval(input string) object.Object {
 	ShouldPrint = true
 

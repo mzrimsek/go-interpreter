@@ -62,3 +62,10 @@ let index = 0;
 while(index < len(test_arr)) {
     putln(test_arr[index++]);
 }
+
+let test = 3;
+putln("Should print 3: " + test);
+test = 2.5;
+putln("Should print 2.5: " + test);
+test = "Hello";
+putln("Should print Hello: " + test);

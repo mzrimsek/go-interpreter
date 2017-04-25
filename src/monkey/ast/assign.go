@@ -6,7 +6,7 @@ import "bytes"
 // AssignStatement : Statement node representing assigning a value to an existing object
 type AssignStatement struct {
 	Token token.Token
-	Name  Expression
+	Name  *Identifier
 	Value Expression
 }
 
