@@ -86,6 +86,7 @@ func TestHashIndexExpressions(t *testing.T) {
 		{`{5: 5}[5]`, 5},
 		{`{true: 5}[true]`, 5},
 		{`{false: 5}[false]`, 5},
+		{`{'a': 2}['a']`, 2},
 	}
 
 	for _, tt := range tests {

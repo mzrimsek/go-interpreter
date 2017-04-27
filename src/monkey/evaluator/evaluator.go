@@ -114,6 +114,8 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		}
 
 		return evalPostfixExpression(left, node.Operator)
+	case *ast.CharacterLiteral:
+		return &object.Character{Value: node.Value}
 	}
 
 	return nil

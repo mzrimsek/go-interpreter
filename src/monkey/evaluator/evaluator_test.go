@@ -438,7 +438,8 @@ func TestHashLiterals(t *testing.T) {
 				  "thr" + "ee": 6 / 2,
 				  4: 4,
 				  true: 5,
-				  false: 6   
+				  false: 6,
+				  'a': 7
 			  }`
 
 	evaluated := testEval(input)
@@ -454,6 +455,7 @@ func TestHashLiterals(t *testing.T) {
 		(&object.Integer{Value: 4}).HashKey():      4,
 		TRUE.HashKey():                             5,
 		FALSE.HashKey():                            6,
+		(&object.Character{Value: 'a'}).HashKey():  7,
 	}
 
 	if len(result.Pairs) != len(expected) {
@@ -481,6 +483,20 @@ func TestAssignStatements(t *testing.T) {
 	for _, tt := range tests {
 		evaluated := testEval(tt.input)
 		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
+func TestCharacterLiteral(t *testing.T) {
+	input := "'a'"
+
+	evaluated := testEval(input)
+	char, ok := evaluated.(*object.Character)
+	if !ok {
+		t.Fatalf("object is not Character. got=%T (%+v)", evaluated, evaluated)
+	}
+
+	if char.Value != 'a' {
+		t.Fatalf("Character has wrong value. got=%q", char.Value)
 	}
 }
 
