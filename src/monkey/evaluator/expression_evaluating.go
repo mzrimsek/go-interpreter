@@ -81,13 +81,18 @@ func evalDecrementPrefixOperatorExpression(right object.Object) object.Object {
 func evalInfixExpression(operator string, left, right object.Object) object.Object {
 	_, leftIsNum := left.(object.Number)
 	_, rightIsNum := right.(object.Number)
+	hasNumArg := leftIsNum || rightIsNum
+
+	_, leftIsChar := left.(*object.Character)
+	_, rightIsChar := right.(*object.Character)
+	hasCharArg := leftIsChar || rightIsChar
 
 	switch {
 	case leftIsNum && rightIsNum:
 		return evalNumberInfixExpression(operator, left, right)
 	case left.Type() == object.STRING_OBJ && right.Type() == object.STRING_OBJ:
 		return evalStringInfixExpression(operator, left, right)
-	case (left.Type() == object.STRING_OBJ || right.Type() == object.STRING_OBJ) && (leftIsNum || rightIsNum):
+	case (left.Type() == object.STRING_OBJ || right.Type() == object.STRING_OBJ) && (hasNumArg || hasCharArg):
 		return evalMixedTypeInfixExpression(operator, left, right)
 	case left.Type() == object.BOOLEAN_OBJ && right.Type() == object.BOOLEAN_OBJ:
 		return evalBooleanInfixExpression(operator, left, right)
