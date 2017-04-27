@@ -22,7 +22,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 
 ## Planned Feature Additions
 * ~~Float literals~~
-* Character literals
+* ~~Character literals~~
 * ~~Variable assignment~~
 * Assignment shortcut operators
 * ~~Prefix Increment and Decrement operators~~
