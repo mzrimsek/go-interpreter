@@ -7,6 +7,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
   * Float
   * String
   * Boolean
+  * Character
   * Array
   * Hash
 * Flow Control
