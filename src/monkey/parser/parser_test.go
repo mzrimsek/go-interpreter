@@ -391,6 +391,26 @@ func TestParsingHashLiteralsWithExpressions(t *testing.T) {
 	}
 }
 
+func TestCharacterLiteralExpression(t *testing.T) {
+	input := "'a'"
+
+	l := lexer.New(input)
+	p := New(l)
+
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	stmt := program.Statements[0].(*ast.ExpressionStatement)
+	literal, ok := stmt.Expression.(*ast.CharacterLiteral)
+	if !ok {
+		t.Fatalf("stmt.Expression not ast.CharacterLiteral. got=%T", stmt.Expression)
+	}
+
+	if literal.Value != 'a' {
+		t.Fatalf("literal.Value not %q. got=%q", 'a', literal.Value)
+	}
+}
+
 func testIdentifier(t *testing.T, exp ast.Expression, value string) bool {
 	ident, ok := exp.(*ast.Identifier)
 	if !ok {
