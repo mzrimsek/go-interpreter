@@ -14,7 +14,7 @@ func (c *Character) Type() ObjectType {
 
 // Inspect : Returns string representation of Object's value
 func (c *Character) Inspect() string {
-	return fmt.Sprintf("%q", c.Value)
+	return fmt.Sprintf("%c", c.Value)
 }
 
 // HashKey : Generates a HashKey
