@@ -40,7 +40,8 @@ func TestNextToken(t *testing.T) {
 			  x++;
 			  x--;
 			  let a = 2;
-			  a = 3;`
+			  a = 3;
+			  'a'`
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -196,6 +197,7 @@ func TestNextToken(t *testing.T) {
 		{token.ASSIGN, "="},
 		{token.INT, "3"},
 		{token.SEMICOLON, ";"},
+		{token.CHAR, "a"},
 		{token.EOF, ""},
 	}
 

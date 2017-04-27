@@ -105,6 +105,15 @@ func (l *Lexer) NextToken() token.Token {
 	case '"':
 		tok.Type = token.STRING
 		tok.Literal = l.readString()
+	case '\'':
+		l.readChar()
+		if l.peekChar() == '\'' {
+			tok = newToken(token.CHAR, l.ch)
+			l.readChar()
+		} else {
+			tok = newToken(token.ILLEGAL, l.ch)
+		}
+
 	case '&':
 		if l.peekChar() == '&' {
 			ch := l.ch
