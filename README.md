@@ -71,6 +71,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
   * Array and String includes function
   * Array all, any, etc type operators
 * Add a wiki with language documentation
+* Convert tests to use an assertion library
 
 ## Setup
 1. Install Go ```sudo apt-get install golang-go```
