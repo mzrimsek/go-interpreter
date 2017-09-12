@@ -54,11 +54,6 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 * List comprehensions
 
 ## Tenative Planned Features
-* Classes and methods
-* Constructors
-* Class instance variables
-* Self class reference
-* Inheritance
 * Package import
 * Global constant variables
 * Emojis
