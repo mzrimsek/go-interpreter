@@ -26,7 +26,7 @@ if [ ! "$VSCODE_BIN" = "" ]; then
 		echo "$GO_EXT not installed...installing..."
 		code --install-extension $GO_EXT
 		DID_INSTALL_EXT=1
-	else 
+	else
 		echo "$GO_EXT already installed"
 	fi
 
@@ -42,7 +42,7 @@ if [ ! "$VSCODE_BIN" = "" ]; then
 	echo "{" >> $SETTINGS_FILE
 	echo "	\"go.formatTool\": \"goreturns\"," >> $SETTINGS_FILE
 	echo "	\"go.docsTool\": \"gogetdoc\"," >> $SETTINGS_FILE
-	echo "	\"go.lintOnSave\": true," >> $SETTINGS_FILE
+	echo "	\"go.lintOnSave\": \"package\"," >> $SETTINGS_FILE
 	echo "	\"go.gopath\": \"$PWD\"" >> $SETTINGS_FILE
 	echo "}" >> $SETTINGS_FILE
 
