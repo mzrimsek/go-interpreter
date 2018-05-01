@@ -3,7 +3,7 @@ let reduce = fn(arr, initial, f) {
         if (len(arr) == 0) { 
             result
         } else { 
-            iter(tail(arr) , f(result , first (arr)))
+            iter(tail(arr) , f(result , first(arr)))
         } 
     };
     iter(arr, initial); 
