@@ -41,18 +41,8 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		env.Set(node.Name.Value, val)
 	case *ast.AssignStatement:
 		return evalAssignStatement(node, env)
-	case *ast.AddAssignStatement:
-		return evalAddAssignStatement(node, env)
-	case *ast.SubAssignStatement:
-		return evalSubAssignStatement(node, env)
-	case *ast.MultAssignStatement:
-		return evalMultAssignStatement(node, env)
-	case *ast.DivAssignStatement:
-		return evalDivAssignStatement(node, env)
-	case *ast.ModAssignStatement:
-		return evalModAssignStatement(node, env)
-	case *ast.PowAssignStatement:
-		return evalPowAssignStatement(node, env)
+	case *ast.ShortcutAssignStatement:
+		return evalShortcutAssignStatement(node, env)
 	// Expressions
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
@@ -249,7 +239,7 @@ func evalAssignStatement(node *ast.AssignStatement, env *object.Environment) obj
 	return env.Set(node.Name.Value, newValue)
 }
 
-func evalAddAssignStatement(node *ast.AddAssignStatement, env *object.Environment) object.Object {
+func evalShortcutAssignStatement(node *ast.ShortcutAssignStatement, env *object.Environment) object.Object {
 	currentValue, ok := env.Get(node.Name.Value)
 	if !ok {
 		return newError("identifier not found: " + node.Name.Value)
@@ -260,107 +250,7 @@ func evalAddAssignStatement(node *ast.AddAssignStatement, env *object.Environmen
 		return newValue
 	}
 
-	result := evalInfixExpression("+", currentValue, newValue)
-	switch result := result.(type) {
-	case *object.Error:
-		return result
-	default:
-		return env.Set(node.Name.Value, result)
-	}
-}
-
-func evalSubAssignStatement(node *ast.SubAssignStatement, env *object.Environment) object.Object {
-	currentValue, ok := env.Get(node.Name.Value)
-	if !ok {
-		return newError("identifier not found: " + node.Name.Value)
-	}
-
-	newValue := Eval(node.Value, env)
-	if isError(newValue) {
-		return newValue
-	}
-
-	result := evalInfixExpression("-", currentValue, newValue)
-	switch result := result.(type) {
-	case *object.Error:
-		return result
-	default:
-		return env.Set(node.Name.Value, result)
-	}
-}
-
-func evalMultAssignStatement(node *ast.MultAssignStatement, env *object.Environment) object.Object {
-	currentValue, ok := env.Get(node.Name.Value)
-	if !ok {
-		return newError("identifier not found: " + node.Name.Value)
-	}
-
-	newValue := Eval(node.Value, env)
-	if isError(newValue) {
-		return newValue
-	}
-
-	result := evalInfixExpression("*", currentValue, newValue)
-	switch result := result.(type) {
-	case *object.Error:
-		return result
-	default:
-		return env.Set(node.Name.Value, result)
-	}
-}
-
-func evalDivAssignStatement(node *ast.DivAssignStatement, env *object.Environment) object.Object {
-	currentValue, ok := env.Get(node.Name.Value)
-	if !ok {
-		return newError("identifier not found: " + node.Name.Value)
-	}
-
-	newValue := Eval(node.Value, env)
-	if isError(newValue) {
-		return newValue
-	}
-
-	result := evalInfixExpression("/", currentValue, newValue)
-	switch result := result.(type) {
-	case *object.Error:
-		return result
-	default:
-		return env.Set(node.Name.Value, result)
-	}
-}
-
-func evalModAssignStatement(node *ast.ModAssignStatement, env *object.Environment) object.Object {
-	currentValue, ok := env.Get(node.Name.Value)
-	if !ok {
-		return newError("identifier not found: " + node.Name.Value)
-	}
-
-	newValue := Eval(node.Value, env)
-	if isError(newValue) {
-		return newValue
-	}
-
-	result := evalInfixExpression("%", currentValue, newValue)
-	switch result := result.(type) {
-	case *object.Error:
-		return result
-	default:
-		return env.Set(node.Name.Value, result)
-	}
-}
-
-func evalPowAssignStatement(node *ast.PowAssignStatement, env *object.Environment) object.Object {
-	currentValue, ok := env.Get(node.Name.Value)
-	if !ok {
-		return newError("identifier not found: " + node.Name.Value)
-	}
-
-	newValue := Eval(node.Value, env)
-	if isError(newValue) {
-		return newValue
-	}
-
-	result := evalInfixExpression("**", currentValue, newValue)
+	result := evalInfixExpression(node.Operator, currentValue, newValue)
 	switch result := result.(type) {
 	case *object.Error:
 		return result
