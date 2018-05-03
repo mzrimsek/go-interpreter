@@ -1,6 +1,8 @@
 package ast
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 // IntegerLiteral : Expression node representing an integer literal
 type IntegerLiteral struct {

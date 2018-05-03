@@ -1,6 +1,8 @@
 package object
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Character : Object representing an character
 type Character struct {

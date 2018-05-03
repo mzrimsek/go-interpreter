@@ -1,6 +1,8 @@
 package ast
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 // StringLiteral : Expression node representing a string literal
 type StringLiteral struct {

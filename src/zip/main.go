@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"zip/reader"
-	"zip/repl"
 	"os"
 	"os/user"
+	"zip/reader"
+	"zip/repl"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func main() {
 		user, err := user.Current()
 		checkError(err)
 
-		fmt.Printf("Hello %s! This is the Monkey programming language!\n", user.Username)
+		fmt.Printf("Hello %s! This is the Zip programming language!\n", user.Username)
 		fmt.Printf("Feel free to type in commands\n")
 		fmt.Printf("Type 'exit' to quit.\n")
 		repl.Start(os.Stdin, os.Stdout)

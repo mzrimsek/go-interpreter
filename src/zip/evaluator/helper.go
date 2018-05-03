@@ -1,7 +1,9 @@
 package evaluator
 
-import "zip/object"
-import "fmt"
+import (
+	"fmt"
+	"zip/object"
+)
 
 func nativeBoolToBooleanObject(input bool) *object.Boolean {
 	if input {

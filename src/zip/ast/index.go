@@ -1,7 +1,9 @@
 package ast
 
-import "zip/token"
-import "bytes"
+import (
+	"bytes"
+	"zip/token"
+)
 
 // IndexExpression : Expression node representing finding the index of an array
 type IndexExpression struct {

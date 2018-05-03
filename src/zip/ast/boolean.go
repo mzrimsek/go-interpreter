@@ -1,6 +1,8 @@
 package ast
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 // Boolean : Expression node representing a boolean literal
 type Boolean struct {

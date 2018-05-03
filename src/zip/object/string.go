@@ -1,6 +1,8 @@
 package object
 
-import "hash/fnv"
+import (
+	"hash/fnv"
+)
 
 // String : Object representing a string
 type String struct {

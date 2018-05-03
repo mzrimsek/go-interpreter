@@ -1,8 +1,10 @@
 package ast
 
-import "zip/token"
-import "bytes"
-import "strings"
+import (
+	"bytes"
+	"strings"
+	"zip/token"
+)
 
 // HashLiteral : Expression node representing a map of key-value pairs
 type HashLiteral struct {

@@ -1,8 +1,10 @@
 package ast
 
-import "zip/token"
-import "bytes"
-import "strings"
+import (
+	"bytes"
+	"strings"
+	"zip/token"
+)
 
 // ArrayLiteral : Expression node representing an array of elements
 type ArrayLiteral struct {

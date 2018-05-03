@@ -1,7 +1,9 @@
 package ast
 
-import "zip/token"
-import "bytes"
+import (
+	"bytes"
+	"zip/token"
+)
 
 // AssignStatement : Statement node representing assigning a value to an existing object
 type AssignStatement struct {

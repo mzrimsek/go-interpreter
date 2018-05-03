@@ -1,6 +1,8 @@
 package lexer
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 func isLetter(ch byte) bool {
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'

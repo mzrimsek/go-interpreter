@@ -1,6 +1,8 @@
 package ast
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 // Identifier : Expression node representing an identifier literal
 type Identifier struct {

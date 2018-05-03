@@ -1,6 +1,8 @@
 package ast
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 // ExpressionStatement : Statement node representing a high-level expression
 type ExpressionStatement struct {

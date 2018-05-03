@@ -1,36 +1,21 @@
-// Package repl : The interactive language shell to work with Monkey code
+// Package repl : The interactive language shell to work with Zip code
 package repl
 
 import (
 	"bufio"
 	"fmt"
 	"io"
+	"os"
 	"zip/evaluator"
 	"zip/lexer"
 	"zip/object"
 	"zip/parser"
-	"os"
 )
 
 // PROMPT : The characters representing the start of each input line in the REPL
 const PROMPT = ">> "
 
-// MONKEY_FACE : The fun ASCII monkey face that shows up when a statement causes the REPL to error
-const MONKEY_FACE = `
-            __,__
-   .--.  .-"     "-.  .--.
-  / .. \/  .-. .-.  \/ .. \
- | |  '|  /   Y   \  |'  | |
- | \   \  \ 0 | 0 /  /   / |
-  \ '- ,\.-"""""""-./, -' /
-   ''-' /_   ^ ^   _\ '-''
-       |  \._   _./  |
-       \   \ '~' /   /
-        '._ '-=-' _.'
-           '-----'
-`
-
-// Start : Starts an interactive shell session for a user to input Monkey code into
+// Start : Starts an interactive shell session for a user to input Zip code into
 func Start(in io.Reader, out io.Writer) {
 	evaluator.ShouldPrint = true
 
@@ -67,8 +52,7 @@ func Start(in io.Reader, out io.Writer) {
 }
 
 func printParserErrors(out io.Writer, errors []string) {
-	io.WriteString(out, MONKEY_FACE)
-	io.WriteString(out, "Woops! We ran into some monkey business here!\n")
+	io.WriteString(out, "Woops! Something went terribly wrong here!\n")
 	io.WriteString(out, " parser errors:\n")
 	for _, msg := range errors {
 		io.WriteString(out, "\t"+msg+"\n")

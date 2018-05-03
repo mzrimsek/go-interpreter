@@ -1,8 +1,10 @@
 package object
 
-import "zip/ast"
-import "bytes"
-import "strings"
+import (
+	"bytes"
+	"strings"
+	"zip/ast"
+)
 
 // Function : Object representing a function including its parameters and body statements
 type Function struct {

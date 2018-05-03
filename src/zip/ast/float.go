@@ -1,6 +1,8 @@
 package ast
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 // FloatLiteral : Expression node representing an float literal
 type FloatLiteral struct {

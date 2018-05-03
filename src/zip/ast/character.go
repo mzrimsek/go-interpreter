@@ -1,6 +1,8 @@
 package ast
 
-import "zip/token"
+import (
+	"zip/token"
+)
 
 // CharacterLiteral : Expression node representing a character literal
 type CharacterLiteral struct {

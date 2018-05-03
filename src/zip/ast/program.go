@@ -1,6 +1,8 @@
 package ast
 
-import "bytes"
+import (
+	"bytes"
+)
 
 // Program : Top level construct containing all parsed AST nodes
 type Program struct {

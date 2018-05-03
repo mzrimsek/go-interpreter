@@ -1,6 +1,8 @@
 package evaluator
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestBangOperator(t *testing.T) {
 	tests := []struct {

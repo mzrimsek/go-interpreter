@@ -1,8 +1,10 @@
 // Package lexer : Applies lexical analysis to program input to tokenize so it can be parsed
 package lexer
 
-import "zip/token"
-import "strings"
+import (
+	"strings"
+	"zip/token"
+)
 
 // Lexer : Handles analyzing and tokenizing program input character by character
 type Lexer struct {
