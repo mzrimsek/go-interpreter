@@ -1,4 +1,5 @@
 # zip-lang
+
 [![Build Status](https://travis-ci.org/mzrimsek/zip-lang.svg?branch=master)](https://travis-ci.org/mzrimsek/zip-lang)
 
 An interpreter written in Go as described in [Writing An Interpreter In Go](https://interpreterbook.com/). The book is great and I highly recommend it.
@@ -6,6 +7,7 @@ An interpreter written in Go as described in [Writing An Interpreter In Go](http
 It's called Zip because there's no practical purpose to this language other than as a learning exercise in both Go and learning how interpreters work.
 
 ## Supported Features
+
 * Builtin Data Types
   * Integer
   * Float
@@ -24,6 +26,28 @@ It's called Zip because there's no practical purpose to this language other than
 * IO
   * Put
   * Putln
+
+## Setup
+
+1. Install Go ```sudo apt-get install golang-go```
+2. Clone this repo
+3. Install dependencies ```make install```
+
+### Visual Studio Code
+
+* Run the set up script ```./env_setup.sh``` 
+
+### direnv
+
+1. Install direnv ```sudo apt-get install direnv```
+2. Edit your ```.bashrc``` and add ```eval "$(direnv hook bash)"``` to the end
+3. Activate in root directory of this repo ```direnv allow```
+
+## Testing
+* ```make test```
+
+## Starting the REPL
+* ```make run```
 
 ## Planned Feature Additions
 * ~~Float literals~~
@@ -62,7 +86,7 @@ It's called Zip because there's no practical purpose to this language other than
 * Global constant variables
 * Emojis
 
-### Todo
+## Todo
 * Extend test coverage for builtins
 * Extend tests to check for more types
 * ~~Read input from a file~~
@@ -71,16 +95,3 @@ It's called Zip because there's no practical purpose to this language other than
   * Array all, any, etc type operators
 * Add a wiki with language documentation
 * Convert tests to use an assertion library
-
-## Setup
-1. Install Go ```sudo apt-get install golang-go```
-2. Clone this repo
-3. Run the set up script ```./env_setup.sh```
-
-The setup script I've written works best with Visual Studio Code.  
-If you don't have vscode installed the script will still set your GOPATH, but I recommend installing direnv to manage your GOPATH automatically.  
-
-### Setup direnv
-1. Install direnv ```sudo apt-get install direnv```
-2. Edit your ```.bashrc``` and add ```eval "$(direnv hook bash)"``` to the end
-3. Activate in root directory of this repo ```direnv allow```
