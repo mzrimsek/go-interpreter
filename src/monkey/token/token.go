@@ -44,6 +44,8 @@ const (
 	SUB_ASSIGN  = "-="
 	MULT_ASSIGN = "*="
 	DIV_ASSIGN  = "/="
+	MOD_ASSIGN  = "%="
+	POW_ASSIGN  = "**="
 
 	// Delimiters
 	COMMA     = ","

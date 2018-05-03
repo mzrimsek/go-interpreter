@@ -213,6 +213,60 @@ func TestDivAssignStatements(t *testing.T) {
 	}
 }
 
+func TestModAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedName  string
+		expectedValue interface{}
+	}{
+		{"x %= 5;", "x", 5},
+		{"y %= 2.5;", "y", 2.5},
+		{"z %= y;", "z", "y"},
+	}
+
+	for _, tt := range tests {
+		l := lexer.New(tt.input)
+		p := New(l)
+
+		program := p.ParseProgram()
+		checkParserErrors(t, p)
+
+		if len(program.Statements) != 1 {
+			t.Fatalf("program.Statements does not contain 1 statements. got=%d", len(program.Statements))
+		}
+
+		stmt := program.Statements[0]
+		testModAssignStatement(t, stmt, tt.expectedName, tt.expectedValue)
+	}
+}
+
+func TestPowAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedName  string
+		expectedValue interface{}
+	}{
+		{"x **= 5;", "x", 5},
+		{"y **= 2.5;", "y", 2.5},
+		{"z **= y;", "z", "y"},
+	}
+
+	for _, tt := range tests {
+		l := lexer.New(tt.input)
+		p := New(l)
+
+		program := p.ParseProgram()
+		checkParserErrors(t, p)
+
+		if len(program.Statements) != 1 {
+			t.Fatalf("program.Statements does not contain 1 statements. got=%d", len(program.Statements))
+		}
+
+		stmt := program.Statements[0]
+		testPowAssignStatement(t, stmt, tt.expectedName, tt.expectedValue)
+	}
+}
+
 func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
 	if s.TokenLiteral() != "let" {
 		t.Errorf("s.TokenLiteral not 'let'. got=%q", s.TokenLiteral())
@@ -355,6 +409,54 @@ func testDivAssignStatement(t *testing.T, stmt ast.Statement, name string, value
 		testFloatLiteral(t, divAssignStmt.Value, float64(v))
 	case string:
 		testIdentifier(t, divAssignStmt.Value, v)
+	}
+
+	return true
+}
+
+func testModAssignStatement(t *testing.T, stmt ast.Statement, name string, value interface{}) bool {
+	modAssignStmt, ok := stmt.(*ast.ModAssignStatement)
+	if !ok {
+		t.Errorf("stmt not ast.ModAssignStatement. got=%T", stmt)
+		return false
+	}
+
+	if modAssignStmt.Name.TokenLiteral() != name {
+		t.Errorf("s.Target not '%s'. got=%s", name, modAssignStmt.Name)
+		return false
+	}
+
+	switch v := value.(type) {
+	case int64:
+		testIntegerLiteral(t, modAssignStmt.Value, int64(v))
+	case float64:
+		testFloatLiteral(t, modAssignStmt.Value, float64(v))
+	case string:
+		testIdentifier(t, modAssignStmt.Value, v)
+	}
+
+	return true
+}
+
+func testPowAssignStatement(t *testing.T, stmt ast.Statement, name string, value interface{}) bool {
+	powAssignStmt, ok := stmt.(*ast.PowAssignStatement)
+	if !ok {
+		t.Errorf("stmt not ast.PowAssignStatement. got=%T", stmt)
+		return false
+	}
+
+	if powAssignStmt.Name.TokenLiteral() != name {
+		t.Errorf("s.Target not '%s'. got=%s", name, powAssignStmt.Name)
+		return false
+	}
+
+	switch v := value.(type) {
+	case int64:
+		testIntegerLiteral(t, powAssignStmt.Value, int64(v))
+	case float64:
+		testFloatLiteral(t, powAssignStmt.Value, float64(v))
+	case string:
+		testIdentifier(t, powAssignStmt.Value, v)
 	}
 
 	return true

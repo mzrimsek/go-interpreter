@@ -45,7 +45,9 @@ func TestNextToken(t *testing.T) {
 			  a += 2;
 			  a -= 3;
 			  a *= 2;
-			  a /= 2;`
+			  a /= 2;
+			  a %= 2;
+			  a **= 2;`
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -216,6 +218,14 @@ func TestNextToken(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.IDENT, "a"},
 		{token.DIV_ASSIGN, "/="},
+		{token.INT, "2"},
+		{token.SEMICOLON, ";"},
+		{token.IDENT, "a"},
+		{token.MOD_ASSIGN, "%="},
+		{token.INT, "2"},
+		{token.SEMICOLON, ";"},
+		{token.IDENT, "a"},
+		{token.POW_ASSIGN, "**="},
 		{token.INT, "2"},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},

@@ -543,6 +543,34 @@ func TestDivAssignStatements(t *testing.T) {
 	}
 }
 
+func TestModAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue int64
+	}{
+		{"let a = 5; a %= 2; a;", 1},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
+func TestPowAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue int64
+	}{
+		{"let a = 2; a **= 4; a;", 16},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
 func TestCharacterLiteral(t *testing.T) {
 	input := "'a'"
 

@@ -78,7 +78,13 @@ func (l *Lexer) NextToken() token.Token {
 		if l.peekChar() == '*' {
 			ch := l.ch
 			l.readChar()
-			tok = token.Token{Type: token.POWER, Literal: string(ch) + string(l.ch)}
+			if l.peekChar() == '=' {
+				nextCh := l.ch
+				l.readChar()
+				tok = token.Token{Type: token.POW_ASSIGN, Literal: string(ch) + string(nextCh) + string(l.ch)}
+			} else {
+				tok = token.Token{Type: token.POWER, Literal: string(ch) + string(l.ch)}
+			}
 		} else if l.peekChar() == '=' {
 			ch := l.ch
 			l.readChar()
@@ -148,7 +154,13 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.ILLEGAL, l.ch)
 		}
 	case '%':
-		tok = newToken(token.PERCENT, l.ch)
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			tok = token.Token{Type: token.MOD_ASSIGN, Literal: string(ch) + string(l.ch)}
+		} else {
+			tok = newToken(token.PERCENT, l.ch)
+		}
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
