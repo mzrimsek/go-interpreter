@@ -40,6 +40,11 @@ const (
 	INCREMENT = "++"
 	DECREMENT = "--"
 
+	ADD_ASSIGN  = "+="
+	SUB_ASSIGN  = "-="
+	MULT_ASSIGN = "*="
+	DIV_ASSIGN  = "/="
+
 	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"

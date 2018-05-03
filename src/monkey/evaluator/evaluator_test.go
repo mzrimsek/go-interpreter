@@ -487,6 +487,62 @@ func TestAssignStatements(t *testing.T) {
 	}
 }
 
+func TestAddAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue int64
+	}{
+		{"let a = 5; a += 2; a;", 7},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
+func TestSubAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue int64
+	}{
+		{"let a = 5; a -= 2; a;", 3},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
+func TestMultAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue int64
+	}{
+		{"let a = 5; a *= 2; a;", 10},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
+func TestDivAssignStatements(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue int64
+	}{
+		{"let a = 6; a /= 2; a;", 3},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expectedValue)
+	}
+}
+
 func TestCharacterLiteral(t *testing.T) {
 	input := "'a'"
 

@@ -39,6 +39,10 @@ func (l *Lexer) NextToken() token.Token {
 			ch := l.ch
 			l.readChar()
 			tok = token.Token{Type: token.INCREMENT, Literal: string(ch) + string(l.ch)}
+		} else if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			tok = token.Token{Type: token.ADD_ASSIGN, Literal: string(ch) + string(l.ch)}
 		} else {
 			tok = newToken(token.PLUS, l.ch)
 		}
@@ -47,6 +51,10 @@ func (l *Lexer) NextToken() token.Token {
 			ch := l.ch
 			l.readChar()
 			tok = token.Token{Type: token.DECREMENT, Literal: string(ch) + string(l.ch)}
+		} else if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			tok = token.Token{Type: token.SUB_ASSIGN, Literal: string(ch) + string(l.ch)}
 		} else {
 			tok = newToken(token.MINUS, l.ch)
 		}
@@ -59,12 +67,22 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.BANG, l.ch)
 		}
 	case '/':
-		tok = newToken(token.SLASH, l.ch)
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			tok = token.Token{Type: token.DIV_ASSIGN, Literal: string(ch) + string(l.ch)}
+		} else {
+			tok = newToken(token.SLASH, l.ch)
+		}
 	case '*':
 		if l.peekChar() == '*' {
 			ch := l.ch
 			l.readChar()
 			tok = token.Token{Type: token.POWER, Literal: string(ch) + string(l.ch)}
+		} else if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			tok = token.Token{Type: token.MULT_ASSIGN, Literal: string(ch) + string(l.ch)}
 		} else {
 			tok = newToken(token.ASTERISK, l.ch)
 		}
@@ -113,7 +131,6 @@ func (l *Lexer) NextToken() token.Token {
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
 		}
-
 	case '&':
 		if l.peekChar() == '&' {
 			ch := l.ch

@@ -41,6 +41,14 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		env.Set(node.Name.Value, val)
 	case *ast.AssignStatement:
 		return evalAssignStatement(node, env)
+	case *ast.AddAssignStatement:
+		return evalAddAssignStatement(node, env)
+	case *ast.SubAssignStatement:
+		return evalSubAssignStatement(node, env)
+	case *ast.MultAssignStatement:
+		return evalMultAssignStatement(node, env)
+	case *ast.DivAssignStatement:
+		return evalDivAssignStatement(node, env)
 	// Expressions
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
@@ -235,4 +243,84 @@ func evalAssignStatement(node *ast.AssignStatement, env *object.Environment) obj
 		return newValue
 	}
 	return env.Set(node.Name.Value, newValue)
+}
+
+func evalAddAssignStatement(node *ast.AddAssignStatement, env *object.Environment) object.Object {
+	currentValue, ok := env.Get(node.Name.Value)
+	if !ok {
+		return newError("identifier not found: " + node.Name.Value)
+	}
+
+	newValue := Eval(node.Value, env)
+	if isError(newValue) {
+		return newValue
+	}
+
+	result := evalInfixExpression("+", currentValue, newValue)
+	switch result := result.(type) {
+	case *object.Error:
+		return result
+	default:
+		return env.Set(node.Name.Value, result)
+	}
+}
+
+func evalSubAssignStatement(node *ast.SubAssignStatement, env *object.Environment) object.Object {
+	currentValue, ok := env.Get(node.Name.Value)
+	if !ok {
+		return newError("identifier not found: " + node.Name.Value)
+	}
+
+	newValue := Eval(node.Value, env)
+	if isError(newValue) {
+		return newValue
+	}
+
+	result := evalInfixExpression("-", currentValue, newValue)
+	switch result := result.(type) {
+	case *object.Error:
+		return result
+	default:
+		return env.Set(node.Name.Value, result)
+	}
+}
+
+func evalMultAssignStatement(node *ast.MultAssignStatement, env *object.Environment) object.Object {
+	currentValue, ok := env.Get(node.Name.Value)
+	if !ok {
+		return newError("identifier not found: " + node.Name.Value)
+	}
+
+	newValue := Eval(node.Value, env)
+	if isError(newValue) {
+		return newValue
+	}
+
+	result := evalInfixExpression("*", currentValue, newValue)
+	switch result := result.(type) {
+	case *object.Error:
+		return result
+	default:
+		return env.Set(node.Name.Value, result)
+	}
+}
+
+func evalDivAssignStatement(node *ast.DivAssignStatement, env *object.Environment) object.Object {
+	currentValue, ok := env.Get(node.Name.Value)
+	if !ok {
+		return newError("identifier not found: " + node.Name.Value)
+	}
+
+	newValue := Eval(node.Value, env)
+	if isError(newValue) {
+		return newValue
+	}
+
+	result := evalInfixExpression("/", currentValue, newValue)
+	switch result := result.(type) {
+	case *object.Error:
+		return result
+	default:
+		return env.Set(node.Name.Value, result)
+	}
 }

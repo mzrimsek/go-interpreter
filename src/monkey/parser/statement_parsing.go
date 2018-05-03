@@ -14,8 +14,17 @@ func (p *Parser) parseStatement() ast.Statement {
 	case token.IDENT:
 		if p.peekTokenIs(token.ASSIGN) {
 			return p.parseAssignStatement()
+		} else if p.peekTokenIs(token.ADD_ASSIGN) {
+			return p.parseAddAssignStatement()
+		} else if p.peekTokenIs(token.SUB_ASSIGN) {
+			return p.parseSubAssignStatement()
+		} else if p.peekTokenIs(token.MULT_ASSIGN) {
+			return p.parseMultAssignStatement()
+		} else if p.peekTokenIs(token.DIV_ASSIGN) {
+			return p.parseDivAssignStatement()
+		} else {
+			return p.parseExpressionStatement()
 		}
-		return p.parseExpressionStatement()
 	default:
 		return p.parseExpressionStatement()
 	}
@@ -92,6 +101,82 @@ func (p *Parser) parseAssignStatement() *ast.AssignStatement {
 	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
 
 	if !p.expectPeek("=") {
+		return nil
+	}
+
+	p.nextToken()
+
+	stmt.Value = p.parseExpression(LOWEST)
+
+	if p.peekTokenIs(token.SEMICOLON) {
+		p.nextToken()
+	}
+
+	return stmt
+}
+
+func (p *Parser) parseAddAssignStatement() *ast.AddAssignStatement {
+	stmt := &ast.AddAssignStatement{Token: p.curToken}
+	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+
+	if !p.expectPeek("+=") {
+		return nil
+	}
+
+	p.nextToken()
+
+	stmt.Value = p.parseExpression(LOWEST)
+
+	if p.peekTokenIs(token.SEMICOLON) {
+		p.nextToken()
+	}
+
+	return stmt
+}
+
+func (p *Parser) parseSubAssignStatement() *ast.SubAssignStatement {
+	stmt := &ast.SubAssignStatement{Token: p.curToken}
+	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+
+	if !p.expectPeek("-=") {
+		return nil
+	}
+
+	p.nextToken()
+
+	stmt.Value = p.parseExpression(LOWEST)
+
+	if p.peekTokenIs(token.SEMICOLON) {
+		p.nextToken()
+	}
+
+	return stmt
+}
+
+func (p *Parser) parseMultAssignStatement() *ast.MultAssignStatement {
+	stmt := &ast.MultAssignStatement{Token: p.curToken}
+	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+
+	if !p.expectPeek("*=") {
+		return nil
+	}
+
+	p.nextToken()
+
+	stmt.Value = p.parseExpression(LOWEST)
+
+	if p.peekTokenIs(token.SEMICOLON) {
+		p.nextToken()
+	}
+
+	return stmt
+}
+
+func (p *Parser) parseDivAssignStatement() *ast.DivAssignStatement {
+	stmt := &ast.DivAssignStatement{Token: p.curToken}
+	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+
+	if !p.expectPeek("/=") {
 		return nil
 	}
 

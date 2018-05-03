@@ -73,3 +73,16 @@ let test = fn() { putln("Hello!"); };
 test();
 test = fn(x, y) { x + y };
 putln(test(1, 2));
+
+let test = 10;
+test *= 0.5;
+putln("Should print 5: " + test);
+test += 3;
+putln("Should print 8: " + test);
+test -= 1;
+putln("Should print 7: " + test);
+test /= 2;
+putln("Should print 4: " + test);
+test = 9;
+test /= 2.0;
+putln("Should print 4.5: " + test);
