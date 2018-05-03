@@ -8,6 +8,8 @@ BINARY_NAME=main
 TEST_FILE=test.zp
 
 all: test build
+install:
+	cd $(SRC_DIR) && $(GOGET)
 build: 
 	cd $(SRC_DIR) && $(GOBUILD) -o $(BINARY_NAME) -v
 test: 
