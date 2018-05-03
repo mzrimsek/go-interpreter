@@ -2,9 +2,10 @@ package evaluator
 
 import (
 	"math"
-	"zip/ast"
-	"zip/object"
 	"strings"
+
+	"github.com/mzrimsek/zip-lang/src/zip/ast"
+	"github.com/mzrimsek/zip-lang/src/zip/object"
 )
 
 func evalPrefixExpression(operator string, right object.Object) object.Object {

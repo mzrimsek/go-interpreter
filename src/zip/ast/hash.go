@@ -3,7 +3,8 @@ package ast
 import (
 	"bytes"
 	"strings"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // HashLiteral : Expression node representing a map of key-value pairs

@@ -2,7 +2,8 @@ package ast
 
 import (
 	"bytes"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // ShortcutAssignStatement : Statement node representing doing an operator to the existing object and assigning that new value

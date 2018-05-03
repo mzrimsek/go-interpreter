@@ -2,8 +2,9 @@ package ast
 
 import (
 	"bytes"
-	"zip/token"
 	"strings"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // FunctionLiteral : Expression node representing a function literal including its parameters and body statements

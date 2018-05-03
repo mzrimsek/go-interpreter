@@ -2,8 +2,8 @@
 package evaluator
 
 import (
-	"zip/ast"
-	"zip/object"
+	"github.com/mzrimsek/zip-lang/src/zip/ast"
+	"github.com/mzrimsek/zip-lang/src/zip/object"
 )
 
 // ShouldPrint : Flag to allow printing of evaluated statements. Setting to false makes the 'puts' builtin the only way to print output.

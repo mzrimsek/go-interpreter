@@ -4,10 +4,11 @@ package reader
 import (
 	"bufio"
 	"io"
-	"zip/evaluator"
-	"zip/lexer"
-	"zip/object"
-	"zip/parser"
+
+	"github.com/mzrimsek/zip-lang/src/zip/evaluator"
+	"github.com/mzrimsek/zip-lang/src/zip/lexer"
+	"github.com/mzrimsek/zip-lang/src/zip/object"
+	"github.com/mzrimsek/zip-lang/src/zip/parser"
 )
 
 // Start : Reads and evaluates the inputted file

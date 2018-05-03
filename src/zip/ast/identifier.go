@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"zip/token"
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // Identifier : Expression node representing an identifier literal

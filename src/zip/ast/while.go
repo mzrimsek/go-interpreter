@@ -2,7 +2,8 @@ package ast
 
 import (
 	"bytes"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // WhileExpression : Expression node representing a while loop

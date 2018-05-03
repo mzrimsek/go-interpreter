@@ -1,8 +1,9 @@
 package lexer
 
 import (
-	"zip/token"
 	"testing"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 func TestNextToken(t *testing.T) {

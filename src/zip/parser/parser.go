@@ -3,10 +3,11 @@ package parser
 
 import (
 	"fmt"
-	"zip/ast"
-	"zip/lexer"
-	"zip/token"
 	"strconv"
+
+	"github.com/mzrimsek/zip-lang/src/zip/ast"
+	"github.com/mzrimsek/zip-lang/src/zip/lexer"
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // Expression Precedence

@@ -2,7 +2,8 @@ package ast
 
 import (
 	"testing"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 func TestString(t *testing.T) {

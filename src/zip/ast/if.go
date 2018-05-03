@@ -2,7 +2,8 @@ package ast
 
 import (
 	"bytes"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // IfExpression : Expression node representing an if/else block

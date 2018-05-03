@@ -2,7 +2,8 @@ package ast
 
 import (
 	"bytes"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // AssignStatement : Statement node representing assigning a value to an existing object

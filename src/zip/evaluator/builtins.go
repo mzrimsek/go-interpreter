@@ -2,7 +2,8 @@ package evaluator
 
 import (
 	"fmt"
-	"zip/object"
+
+	"github.com/mzrimsek/zip-lang/src/zip/object"
 )
 
 var builtins = map[string]*object.Builtin{

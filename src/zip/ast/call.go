@@ -2,8 +2,9 @@ package ast
 
 import (
 	"bytes"
-	"zip/token"
 	"strings"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // CallExpression : Expression node representing calling a function and passing it arguments

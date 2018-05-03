@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"zip/token"
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 func isLetter(ch byte) bool {

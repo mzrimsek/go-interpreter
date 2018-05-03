@@ -6,10 +6,11 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"zip/evaluator"
-	"zip/lexer"
-	"zip/object"
-	"zip/parser"
+
+	"github.com/mzrimsek/zip-lang/src/zip/evaluator"
+	"github.com/mzrimsek/zip-lang/src/zip/lexer"
+	"github.com/mzrimsek/zip-lang/src/zip/object"
+	"github.com/mzrimsek/zip-lang/src/zip/parser"
 )
 
 // PROMPT : The characters representing the start of each input line in the REPL

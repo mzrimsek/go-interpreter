@@ -1,10 +1,11 @@
 package evaluator
 
 import (
-	"zip/lexer"
-	"zip/object"
-	"zip/parser"
 	"testing"
+
+	"github.com/mzrimsek/zip-lang/src/zip/lexer"
+	"github.com/mzrimsek/zip-lang/src/zip/object"
+	"github.com/mzrimsek/zip-lang/src/zip/parser"
 )
 
 func TestEvalIntegerExpression(t *testing.T) {

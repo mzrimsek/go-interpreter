@@ -1,9 +1,10 @@
 package parser
 
 import (
-	"zip/ast"
-	"zip/lexer"
 	"testing"
+
+	"github.com/mzrimsek/zip-lang/src/zip/ast"
+	"github.com/mzrimsek/zip-lang/src/zip/lexer"
 )
 
 func TestParsingPrefixExpressions(t *testing.T) {

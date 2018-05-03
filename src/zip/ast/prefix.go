@@ -2,7 +2,8 @@ package ast
 
 import (
 	"bytes"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // PrefixExpression : Expression node representing prefix expressions like negative numbers, negation, and prefix incrementing/decrementing

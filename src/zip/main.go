@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 	"os/user"
-	"zip/reader"
-	"zip/repl"
+
+	"github.com/mzrimsek/zip-lang/src/zip/reader"
+	"github.com/mzrimsek/zip-lang/src/zip/repl"
 )
 
 func main() {

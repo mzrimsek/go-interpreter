@@ -3,7 +3,8 @@ package object
 import (
 	"bytes"
 	"strings"
-	"zip/ast"
+
+	"github.com/mzrimsek/zip-lang/src/zip/ast"
 )
 
 // Function : Object representing a function including its parameters and body statements

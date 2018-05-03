@@ -2,9 +2,10 @@ package parser
 
 import (
 	"fmt"
-	"zip/ast"
-	"zip/lexer"
 	"testing"
+
+	"github.com/mzrimsek/zip-lang/src/zip/ast"
+	"github.com/mzrimsek/zip-lang/src/zip/lexer"
 )
 
 func TestIdentifierExpression(t *testing.T) {

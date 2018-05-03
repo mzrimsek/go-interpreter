@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"zip/ast"
-	"zip/token"
+	"github.com/mzrimsek/zip-lang/src/zip/ast"
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 func (p *Parser) parseExpression(precedence int) ast.Expression {

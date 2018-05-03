@@ -3,7 +3,8 @@ package lexer
 
 import (
 	"strings"
-	"zip/token"
+
+	"github.com/mzrimsek/zip-lang/src/zip/token"
 )
 
 // Lexer : Handles analyzing and tokenizing program input character by character
