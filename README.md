@@ -1,5 +1,7 @@
-# go-interpreter
+# zip-lang
 An interpreter written in Go as described in [Writing An Interpreter In Go](https://interpreterbook.com/). The book is great and I highly recommend it.
+
+It's called Zip because there's no practical purpose to this other than as a learning exercise.
 
 ## Supported Features
 * Builtin Data Types
